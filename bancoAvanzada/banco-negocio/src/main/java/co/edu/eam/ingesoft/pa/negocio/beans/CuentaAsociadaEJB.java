@@ -22,7 +22,7 @@ public class CuentaAsociadaEJB {
 	private EntityManager em;
 	
 	/**
-	 * 
+	 * h
 	 * @param cuentaAso
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
