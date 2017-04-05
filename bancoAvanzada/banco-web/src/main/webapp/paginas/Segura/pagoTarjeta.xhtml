@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+<ui:define name="PagoTarjeta">
+		<h:form prependId="false">
+
+			<h:panelGrid id="panelNumTarjeta" columns="2">
+			
+				<h:outputLabel for="cbTarjeta" id="lbTarjeta"
+					value="#{msj['customer.seleccioneTarjeta']}" />
+				<h:selectOneMenu id="cbTarjeta"
+					value="#{controladorPagoTarjeta.tarjetaSeleccionada}">
+
+					<f:selectItems value="#{controladorPagoTarjeta.tarjetas}"
+						var="tarjeta" itemValue="#{tarjeta}" itemLabel="#{tarjeta.number}" />
+						
+					<f:ajax event="change" execute="@this" render="panelTabla"
+							listener="#{controladorPagoTarjeta.cargarTablaCombo}"/>	
+
+				</h:selectOneMenu>
+			</h:panelGrid>
+
+
+			<h:panelGrid id="panelTabla" columns="5" style="margin: 0 auto;">
+
+				<p:dataTable id="tablaConsu"
+					value="#{controladorPagoTarjeta.consumos}" var="con" border="1">
+
+					<p:column headerText="#{msj['customer.numeroTarjeta']}">				
+						<h:outputLabel value="#{con.creditCard.number}" style="aling-center" />
+					</p:column>
+
+					<p:column headerText="#{msj['customer.valorConsumo']}">
+						<h:outputLabel value="#{con.ammount}" />
+					</p:column>
+
+					<p:column headerText="#{msj['customer.numeroCuotas']}">
+						<h:outputLabel value="#{con.numberShares}" />
+					</p:column>
+
+					<p:column headerText="#{msj['customer.valorRestante']}">
+						<h:outputLabel value="#{con.reamingAmmount}" />
+					</p:column>
+
+					<p:column headerText="#{msj['customer.accion']}">
+						<h:commandButton value="Pagar"
+							action="#{controladorPagoTarjeta.pagoConsumoCompleto(con)}" />
+					</p:column>
+
+
+				</p:dataTable>
+
+			</h:panelGrid>
+			<h:panelGrid id="panelDatos3" columns="2">
+
+				<h:outputLabel for="cbcuenta" id="lbcuenta"
+					value="#{msj['customer.seleccioneCuenta']}" />
+				<h:selectOneMenu id="cbcuenta"
+					value="#{controladorPagoTarjeta.cuentaSeleccionada}">
+
+					<f:selectItems value="#{controladorPagoTarjeta.cuentas}"
+						var="cuenta" itemValue="#{cuenta}" itemLabel="#{cuenta.number}" />
+
+				</h:selectOneMenu>
+
+				<h:outputLabel id="lbladicionar" value="#{msj['customer.valorExtra']}" for="tfadicion" />
+				<h:inputText id="tfadicion"
+					value="#{controladorPagoTarjeta.valorExtra}" />
+
+
+
+			</h:panelGrid>
+			<h:panelGrid id="panelBotones3" columns="2">
+
+				<p:commandButton id="btnPagar" value="#{msj['customer.pagar']}"
+					process="@this,cbcuenta,tfadicion,cbTarjeta"
+					update="panelNumTarjeta,panelTabla,panelDatos3"
+					action="#{controladorPagoTarjeta.pagar}" />
+
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

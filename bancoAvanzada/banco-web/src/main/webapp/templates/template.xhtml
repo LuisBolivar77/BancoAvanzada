@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>BancoLTZ</title>
+	<link rel="stylesheet" href="#{request.contextPath}/css/components.css" />
+	<link rel="stylesheet" href="#{request.contextPath}/css/responsee.css" />
+	<link rel="stylesheet"
+		href="#{request.contextPath}/owl-carousel/owl.carousel.css" />
+	<link rel="stylesheet"
+		href="#{request.contextPath}/owl-carousel/owl.theme.css" />
+	<!-- CUSTOM STYLE -->
+	<link rel="stylesheet"
+		href="#{request.contextPath}/css/template-style.css" />
+	<link
+		href='#{request.contextPath}/http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800&amp;subset=latin,latin-ext'
+		rel='stylesheet' type='text/css' />
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/modernizr.js"></script>
+	<script type="text/javascript" src="js/responsee.js"></script>
+</h:head>
+<h:body class="size-1140">
+	<header>
+		<nav>
+			<div class="line">
+				<div class="top-nav">
+					<div class="logo hide-l">
+						<a href="../design/">DESIGN <br /> <strong>THEME</strong></a>
+					</div>
+					<p class="nav-text">Custom menu text</p>
+					<div class="top-nav s-12 l-5">
+						<ul class="right top-ul chevron">
+							<li><a href="../General/LogIn.xhtml">LOG-IN</a></li>
+							<li><a href="../General/customer.xhtml">REGISTRO CLIENTE</a></li>
+							<li><a href="../Segura/CustomerLogIn.xhtml">LISTA
+									CLIENTES</a></li>
+						</ul>
+					</div>
+					<ul class="s-12 l-2">
+						<li class="logo hide-s hide-m"><a href="../design/">QUINDI
+								<br /> <strong>BANCO</strong>
+						</a></li>
+					</ul>
+					<div class="top-nav s-12 l-5">
+						<ul class="top-ul chevron">
+							<li><a href="../Segura/pagoTarjeta.xhtml">PAGO CUOTA</a></li>
+							<li><a>GESTION PRODUCTOS</a>
+								<ul>
+									<li><a href="../Segura/ResumenProductos.xhtml">Informacion de los Productos</a></li>
+									<li><a href="../Segura/AsociarCuentas.xhtml">Asociar Cuenta</a></li>
+									<li><a href="../Segura/AvanceCuentaAhorros.xhtml">Avances</a></li>
+									<li><a href="../Segura/Transacciones.xhtml">Tranferecias a Cuentas Asociadas</a></li>
+								</ul></li>
+							<h:form>
+								<li><h:commandLink
+										action="#{ControladorSesion.cerrarSesion}"
+										rendered="#{ControladorSesion.logIn}" value="Cerrar Sesion" />
+								</li>
+							</h:form>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<section>
+		<!-- CAROUSEL -->
+		<div id="carousel">
+			<div id="owl-demo" class="owl-carousel owl-theme"></div>
+		</div>
+		<!-- FIRST BLOCK -->
+		<div id="first-block"></div>
+		<!-- SECOND BLOCK -->
+		<div id="second-block">
+			<p:messages id="facesMessage" autoUpdate="true" globalOnly="true"
+				closable="true" />
+			<ui:insert name="cuerpoRegistro" />
+			<ui:insert name="cuerpoBusqueda" />
+			<ui:insert name="PagoTarjeta" />
+			<ui:insert name="cuerpoLogIn" />
+			<ui:insert name="resumenProductos"/>
+			<ui:insert name="cuerpoRegistroCuentaAsociada"/>
+			<ui:insert name="AvanceCuentaAhorro"/>
+			<ui:insert name="Transacciones"/>
+		</div>
+		<!-- GALLERY -->
+		<div id="third-block"></div>
+		<div id="fourth-block"></div>
+	</section>
+	<!-- FOOTER -->
+	<footer>
+		<div class="line">
+			<div class="s-12 l-6">
+				<p>Copyright 2015, Vision Design - graphic zoo</p>
+			</div>
+			<div class="s-12 l-6">
+				<p class="right">
+					<a class="right" href="http://www.myresponsee.com"
+						title="Responsee - lightweight responsive framework"></a>
+				</p>
+			</div>
+		</div>
+	</footer>
+	<script type="text/javascript" src="owl-carousel/owl.carousel.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$("#owl-demo").owlCarousel({
+				slideSpeed : 300,
+				autoPlay : true,
+				navigation : false,
+				pagination : false,
+				singleItem : true
+			});
+			$("#owl-demo2").owlCarousel({
+				slideSpeed : 300,
+				autoPlay : true,
+				navigation : false,
+				pagination : true,
+				singleItem : true
+			});
+		});
+	</script>
+</h:body>
+</html>
