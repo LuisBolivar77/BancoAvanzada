@@ -9,10 +9,13 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.xml.ws.BindingProvider;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Banco;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CuentaAsociada;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
+import co.edu.eam.pa.clientews.Notificaciones;
+import co.edu.eam.pa.clientews.NotificacionesService;
 
 @LocalBean
 @Stateless
@@ -22,7 +25,7 @@ public class CuentaAsociadaEJB {
 	private EntityManager em;
 	
 	/**
-	 * h
+	 * 
 	 * @param cuentaAso
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -47,6 +50,15 @@ public class CuentaAsociadaEJB {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void eliminarCuenta(CuentaAsociada ca){
 		em.remove(em.contains(ca) ? ca : em.merge(ca));
+	}
+	
+	/**
+	 * 
+	 * @param cu
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void editarCuentaAsociadda(CuentaAsociada cu){
+		em.merge(cu);
 	}
 	
 	

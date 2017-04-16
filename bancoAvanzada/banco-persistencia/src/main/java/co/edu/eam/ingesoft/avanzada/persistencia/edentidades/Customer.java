@@ -39,6 +39,12 @@ public class Customer implements Serializable {
 	@Column(name = "lastname", nullable = false, length=15)
 	private String lastName;
 	
+	@Column(name="telefono")
+	private String telefono;
+	
+	@Column(name="email")
+	private String email;
+	
 	@OneToMany(mappedBy="customer", cascade={})
 	private List<Product> products;
 
@@ -47,29 +53,27 @@ public class Customer implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
-
 
 	/**
 	 * @param idType
 	 * @param idNum
 	 * @param name
 	 * @param lastName
+	 * @param telefono
+	 * @param email
 	 * @param products
 	 */
-	public Customer(String idType, String idNum, String name, String lastName, List<Product> products) {
+	public Customer(String idType, String idNum, String name, String lastName, String telefono, String email,
+			List<Product> products) {
 		super();
 		this.idType = idType;
 		this.idNum = idNum;
 		this.name = name;
 		this.lastName = lastName;
+		this.telefono = telefono;
+		this.email = email;
 		this.products = products;
 	}
-
-
-
-
 
 	/**
 	 * @return the idType
@@ -126,6 +130,40 @@ public class Customer implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
+
+	/**
+	 * @return the telefono
+	 */
+	public String getTelefono() {
+		return telefono;
+	}
+
+
+	/**
+	 * @param telefono the telefono to set
+	 */
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
 	
 	
 	

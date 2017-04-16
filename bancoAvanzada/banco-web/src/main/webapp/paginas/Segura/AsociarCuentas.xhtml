@@ -18,10 +18,10 @@
 				<h:selectOneMenu id="cbTipoCed"
 					value="#{controladorProductos.tipoSeleccionado}">
 
-					<f:selectItem itemValue="Cedula" itemLabel="Cedula" />
-					<f:selectItem itemValue="Pasaporte" itemLabel="Pasaporte" />
-					<f:selectItem itemValue="Tarjeta de Identidad"
-						itemLabel="Tarjeta de Identidad" />
+					<f:selectItem itemValue="CC" itemLabel="CC" />
+					<f:selectItem itemValue="TI" itemLabel="TI" />
+					<f:selectItem itemValue="PAS" itemLabel="PAS" />
+					<f:selectItem itemValue="CE" itemLabel="CE" />
 
 				</h:selectOneMenu>
 
@@ -57,7 +57,7 @@
 
 			</h:panelGrid>
 
-			<h:panelGrid id="panelTabla" columns="4">
+			<h:panelGrid id="panelTabla" columns="5">
 
 				<p:dataTable id="tablaConsu" value="#{controladorProductos.cuentasAsociadas}"
 					var="ca" border="1">
@@ -70,13 +70,18 @@
 						<h:outputLabel value="#{ca.nombreTitular}" />
 					</p:column>
 
-					<p:column headerText="#{msj['customer.identificacion']}">
+					<p:column headerText="#{msj['customer.validado']}">
 						<h:outputLabel value="#{ca.estado}" />
 					</p:column>
 					
 					<p:column headerText="#{msj['customer.borrar']}">
-						<h:commandButton value="Borrar"
+						<p:commandButton value="Borrar" process="@this,tablaConsu" update="tablaConsu"
 							action="#{controladorProductos.borrarCuenta(ca)}" />
+					</p:column>
+					
+					<p:column headerText="#{msj['customer.validarCuenta']}">
+						<p:commandButton value="Validar" process="@this,"
+							action="#{controladorProductos.verificarCuenta(ca)}" />
 					</p:column>
 
 				</p:dataTable>
