@@ -200,25 +200,6 @@ public class ProductoEJB {
 
 		return cadena;
 	}
-	
-	/**
-	 * Genera el n�mero de tarjeta de cr�dito aleatoriamente
-	 * 
-	 * @return el n�mero de la tarjeta de cr�dito
-	 */
-	public String numeroCodigoValidacion() {
-		String cadena = "";
-		int resultado = 0;
-		do {
-			int num = ThreadLocalRandom.current().nextInt(0, 9);
-			cadena += num + "";
-			if (cadena.length() > 1) {
-				resultado = num * resultado;
-			}
-		} while (cadena.length() <= 5);
-
-		return cadena;
-	}
 
 	/**
 	 * Genera el n�mero de tarjeta de cr�dito aleatoriamente

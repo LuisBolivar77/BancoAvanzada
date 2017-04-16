@@ -1,8 +1,8 @@
 package co.edu.eam.ingesoft.pa.banco.web.controladores;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
-import javax.xml.ws.BindingProvider;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -13,6 +13,7 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Banco;
+import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CodigoValidacion;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CreditCard;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CreditCardConsume;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CuentaAsociada;
@@ -20,13 +21,11 @@ import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
+import co.edu.eam.ingesoft.pa.negocio.beans.CodigoValidacionEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadaEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.ProductoEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.WebServicesEJB;
 import co.edu.eam.ingesoft.pa.negocio.exception.ExcepcionNegocio;
-import co.edu.eam.pa.clientews.Notificaciones;
-import co.edu.eam.pa.clientews.NotificacionesService;
-import co.edu.eam.pa.clientews.RespuestaNotificacion;
-import co.edu.eam.pa.clientews.Sms;
 
 @Named("controladorProductos")
 @SessionScoped
@@ -108,7 +107,7 @@ public class ControladorProductos implements Serializable {
 	 * 
 	 */
 	private Usuario cliente;
-	
+
 	/**
 	 * 
 	 */
@@ -125,6 +124,18 @@ public class ControladorProductos implements Serializable {
 	 */
 	@EJB
 	private CuentaAsociadaEJB cuentaAsoEJB;
+
+	/**
+	 * 
+	 */
+	@EJB
+	private CodigoValidacionEJB codigoEJB;
+
+	/**
+	 * 
+	 */
+	@EJB
+	private WebServicesEJB webServiceEJB;
 
 	/**
 	 * 
@@ -194,7 +205,7 @@ public class ControladorProductos implements Serializable {
 		Banco banco = cuentaAsoEJB.buscarBanco(nombre);
 
 		CuentaAsociada cuentaAso = new CuentaAsociada();
-		cuentaAso.setEstado(true);
+		cuentaAso.setEstado("PENDIENTE");
 		cuentaAso.setNombreBanco(banco);
 		cuentaAso.setNombreCuenta(nombreCuenta);
 		cuentaAso.setNombreTitular(nombreTitular);
@@ -204,11 +215,8 @@ public class ControladorProductos implements Serializable {
 		cuentaAso.setUsuario(cliente);
 
 		cuentaAsoEJB.crearCuentaAsociada(cuentaAso);
+
 		listaCuentasAsociadas(cliente);
-		nombreCuenta = "";
-		nombreTitular = "";
-		identificacion = "";
-		numeroCuenta = "";
 		Messages.addFlashGlobalInfo(" La cuenta se ha registrado correctamente ");
 
 	}
@@ -222,41 +230,48 @@ public class ControladorProductos implements Serializable {
 		listaCuentasAsociadas(cliente);
 
 	}
-	
+
 	/**
 	 * 
 	 */
-	public void enviarCodigoValidacion(){
-		codigoVali = productoEJB.numeroCodigoValidacion();
-		NotificacionesService cliente = new NotificacionesService();
-		Notificaciones servicio = cliente.getNotificacionesPort();
-		
-		String endpointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
-		BindingProvider bp = (BindingProvider) servicio;
-		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointURL);
-		
-		Sms mensaje = new Sms();
-		mensaje.setTexto(codigoVali);
-		mensaje.setTo("3007121419");
-		
-		servicio.enviarSMS(mensaje);
-		Messages.addFlashGlobalInfo(" Mensaje enviado con exito ");
-		
+	public void enviarCodigoValidacion() {
+
+		Date fecha = new Date();
+		fecha.setMinutes(fecha.getMinutes() + 2);
+
+		codigoVali = codigoEJB.numeroCodigoValidacion();
+		CodigoValidacion codigo = new CodigoValidacion();
+		codigo.setCodigo(codigoVali);
+		codigo.setFecha(fecha);
+		codigo.setUsuario(cliente);
+
+		codigoEJB.crearCodigoValidacion(codigo);
+		codigoEJB.enviarEmail(codigoVali, cliente.getCustomer().getEmail());
+		// codigoEJB.enviarSms(codigoVali, cliente.getCustomer().getTelefono());
+
+		System.out.println("hora de creaciooooooooooooon = " + fecha);
+
 	}
 
 	public void transferencia() {
 		String numCuenta = CuentaComboSelecionada;
 		String nomCuentaAso = cuentaAsociadaSelec;
+		CodigoValidacion codigo = codigoEJB.buscarCodigoValidacion(codigoVali);
+		Date fecha = new Date();
 
 		Product proCuenta = productoEJB.buscarProducto(numCuenta);
 		SavingAccount cuenta = (SavingAccount) proCuenta;
 		try {
 			if (codigovalidacion != null) {
-				if (codigovalidacion.equals(codigoVali)) {
-					productoEJB.transferenciaWeb(cuenta, valor);
-					Messages.addFlashGlobalInfo(" La transferencia se ha realizado con exito ");
+				if (codigo.getFecha().before(fecha)) {
+					if (codigovalidacion.equals(codigoVali)) {
+						productoEJB.transferenciaWeb(cuenta, valor);
+						Messages.addFlashGlobalInfo(" La transferencia se ha realizado con exito ");
+					} else {
+						Messages.addFlashGlobalInfo(" El codigo de validacion ingresado no es el correcto ");
+					}
 				} else {
-					Messages.addFlashGlobalInfo(" El codigo de validacion ingresado no es el correcto ");
+					Messages.addFlashGlobalInfo(" El codigo que ingrese a expirado, debes solicitar uno nuevo ");
 				}
 			} else {
 				Messages.addFlashGlobalInfo(" Es obligatorio ingresar el codigo de validacion ");
@@ -264,6 +279,11 @@ public class ControladorProductos implements Serializable {
 		} catch (ExcepcionNegocio e) {
 			e.getMessage();
 		}
+	}
+
+	public void verificarCuenta(CuentaAsociada cuenta) {
+			webServiceEJB.VerificarCuenta(cuenta);
+
 	}
 
 	/**
