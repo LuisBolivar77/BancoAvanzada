@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="cuerpoRegistroCuentaAsociada">
+		<h:form prependId="false">
+			<h:panelGrid id="panelDatosAsociacion" columns="2">
+
+				<h:outputLabel id="lblNombreTitular"
+					value="#{msj['customer.nombreTitular']}" />
+				<h:inputText id="tfNombreNombreTitular"
+					value="#{controladorProductos.nombreTitular}" />
+
+				<h:outputLabel id="lblTipoId"
+					value="#{msj['customer.tipoIdentificacion']}" />
+				<h:selectOneMenu id="cbTipoCed"
+					value="#{controladorProductos.tipoSeleccionado}">
+
+					<f:selectItem itemValue="CC" itemLabel="CC" />
+					<f:selectItem itemValue="TI" itemLabel="TI" />
+					<f:selectItem itemValue="PAS" itemLabel="PAS" />
+					<f:selectItem itemValue="CE" itemLabel="CE" />
+
+				</h:selectOneMenu>
+
+				<h:outputLabel id="lblCed" value="#{msj['customer.identificacion']}" />
+				<h:inputText id="tfCed"
+					value="#{controladorProductos.identificacion}" />
+
+				<h:outputLabel id="lblbancoSeleccionado" value="#{msj['customer.banco']}" />
+				<h:selectOneMenu id="cbbancoSeleccionado"
+					value="#{controladorProductos.bancoSeleccionado}">
+
+					<f:selectItems value="#{controladorProductos.bancos}" var="bancos"
+						itemValue="#{bancos}" itemLabel="#{bancos.nombre}" />
+
+				</h:selectOneMenu>
+
+				<h:outputLabel id="lblnumeroCuenta"
+					value="#{msj['customer.numeroCuenta']}" />
+				<h:inputText id="tfnuemroCuenta"
+					value="#{controladorProductos.numeroCuenta}" />
+
+				<h:outputLabel id="lblnombreCuenta"
+					value="#{msj['customer.nombreIdentificacion']}" />
+				<h:inputText id="tfnombreCuenta"
+					value="#{controladorProductos.nombreCuenta}" />
+
+			</h:panelGrid>
+			<h:panelGrid id="panelBotones" columns="2">
+
+				<p:commandButton id="btnGuardar" value="#{msj['customer.guardar']}"
+					process="@this,panelDatosAsociacion" update="panelTabla"
+					action="#{controladorProductos.crearCuentaAsociada}" />
+
+			</h:panelGrid>
+
+			<h:panelGrid id="panelTabla" columns="5">
+
+				<p:dataTable id="tablaConsu" value="#{controladorProductos.cuentasAsociadas}"
+					var="ca" border="1">
+
+					<p:column headerText="#{msj['customer.nombre']}">
+						<h:outputLabel value="#{ca.nombreCuenta}" />
+					</p:column>
+
+					<p:column headerText="#{msj['customer.apellido']}">
+						<h:outputLabel value="#{ca.nombreTitular}" />
+					</p:column>
+
+					<p:column headerText="#{msj['customer.validado']}">
+						<h:outputLabel value="#{ca.estado}" />
+					</p:column>
+					
+					<p:column headerText="#{msj['customer.borrar']}">
+						<p:commandButton value="Borrar" process="@this,tablaConsu" update="tablaConsu"
+							action="#{controladorProductos.borrarCuenta(ca)}" />
+					</p:column>
+					
+					<p:column headerText="#{msj['customer.validarCuenta']}">
+						<p:commandButton value="Validar" process="@this,"
+							action="#{controladorProductos.verificarCuenta(ca)}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

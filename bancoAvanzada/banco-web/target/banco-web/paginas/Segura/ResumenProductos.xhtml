@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="resumenProductos">
+		<h:form prependId="false">
+			<h:panelGrid id="panelCuentas" columns="1" style="text-align:center;">
+				<h:outputLabel value="#{msj['customer.cuenta']}" id="lblCuentas" />
+			</h:panelGrid>
+			
+			<h:panelGrid id="panelListarCuentas" columns="2">
+				<p:dataTable id="tablaCuentas"
+					value="#{controladorProductos.cuentas}" var="cuenta" border="1">
+
+					<p:column headerText="#{msj['customer.numeroCuenta']}">				
+						<h:outputLabel value="#{cuenta.number}"/>
+					</p:column>
+
+					<p:column headerText="#{msj['customer.saldo']}">
+						<h:outputLabel value="#{cuenta.ammount}" />
+					</p:column>
+
+				</p:dataTable>
+				
+			</h:panelGrid>
+			
+			<h:panelGrid id="panelTarjetas" columns="1" style="text-align:center;">
+				<h:outputLabel value="#{msj['customer.tarjetas']}" id="lblTarjetas" />
+			</h:panelGrid>
+			
+			<h:panelGrid id="panelListarTarjetas" columns="4">
+				<p:dataTable id="tablaTarjetas"
+					value="#{controladorProductos.tarjetas}" var="tar" border="1">
+
+					<p:column headerText="#{msj['customer.numeroTarjeta']}">				
+						<h:outputLabel value="#{tar.number}"/>
+					</p:column>
+
+					<p:column headerText="#{msj['customer.franquicia']}">
+						<h:outputLabel value="#{tar.franchise}" />
+					</p:column>
+					
+					<p:column headerText="#{msj['customer.valorRestante']}">
+						<h:outputLabel value="#{tar.ammount - tar.cantidadRestante}" />
+					</p:column>
+					
+					<p:column headerText="#{msj['customer.disponible']}">
+						<h:outputLabel value="#{tar.cantidadRestante}" />
+					</p:column>
+
+				</p:dataTable>
+				
+			</h:panelGrid>
+
+		</h:form>
+
+
+	</ui:define>
+
+
+</ui:composition>

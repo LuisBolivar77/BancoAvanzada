@@ -16,10 +16,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "T_CUENTA_ASOCIADA")
 @NamedQueries({
-		@NamedQuery(name = CuentaAsociada.CUENTAS_ASOCIADAS_USUARIO, query = "SELECT c FROM CuentaAsociada c WHERE c.usuario = ?1 ") })
+		@NamedQuery(name = CuentaAsociada.CUENTAS_ASOCIADAS_USUARIO, query = "SELECT c FROM CuentaAsociada c WHERE c.usuario = ?1 "),
+		@NamedQuery(name= CuentaAsociada.LISTAR_CUENTAS_ASOCIADAS, query = "SELECT c FROM CuentaAsociada c")
+		})
 public class CuentaAsociada implements Serializable {
 
 	public static final String CUENTAS_ASOCIADAS_USUARIO = "lista.cuentasAsociadas";
+	public static final String LISTAR_CUENTAS_ASOCIADAS = "CuentaAsociada.listar";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

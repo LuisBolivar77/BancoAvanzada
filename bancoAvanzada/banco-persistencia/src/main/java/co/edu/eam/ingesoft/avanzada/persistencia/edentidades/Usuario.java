@@ -24,7 +24,7 @@ public class Usuario implements Serializable{
 
 	
 	@Id
-	@Column(name= "userName", unique=true)
+	@Column(name= "userName", nullable=false)
 	private String userName;
 	
 	@Column(name= "password")
