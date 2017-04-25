@@ -32,12 +32,12 @@ public interface InterbancarioWS {
      * @param nombre
      * @param numerocuenta
      * @return
-     *     returns co.edu.eam.ingesoft.pa.negocio.serviciosinterbancariosws.RespuestaServicio
+     *     returns co.edu.eam.pa.serviciosinterbancariosws.RespuestaServicio
      */
     @WebMethod
     @WebResult(name = "respuestaServicio", targetNamespace = "")
-    @RequestWrapper(localName = "registrarCuentaAsociada", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.ingesoft.pa.negocio.serviciosinterbancariosws.RegistrarCuentaAsociada")
-    @ResponseWrapper(localName = "registrarCuentaAsociadaResponse", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.ingesoft.pa.negocio.serviciosinterbancariosws.RegistrarCuentaAsociadaResponse")
+    @RequestWrapper(localName = "registrarCuentaAsociada", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.pa.serviciosinterbancariosws.RegistrarCuentaAsociada")
+    @ResponseWrapper(localName = "registrarCuentaAsociadaResponse", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.pa.serviciosinterbancariosws.RegistrarCuentaAsociadaResponse")
     public RespuestaServicio registrarCuentaAsociada(
         @WebParam(name = "idbanco", targetNamespace = "")
         String idbanco,
@@ -56,12 +56,12 @@ public interface InterbancarioWS {
      * @param idbanco
      * @param numerocuenta
      * @return
-     *     returns co.edu.eam.ingesoft.pa.negocio.serviciosinterbancariosws.RespuestaServicio
+     *     returns co.edu.eam.pa.serviciosinterbancariosws.RespuestaServicio
      */
     @WebMethod
     @WebResult(name = "respuestaServicio", targetNamespace = "")
-    @RequestWrapper(localName = "transferirMonto", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.ingesoft.pa.negocio.serviciosinterbancariosws.TransferirMonto")
-    @ResponseWrapper(localName = "transferirMontoResponse", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.ingesoft.pa.negocio.serviciosinterbancariosws.TransferirMontoResponse")
+    @RequestWrapper(localName = "transferirMonto", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.pa.serviciosinterbancariosws.TransferirMonto")
+    @ResponseWrapper(localName = "transferirMontoResponse", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.pa.serviciosinterbancariosws.TransferirMontoResponse")
     public RespuestaServicio transferirMonto(
         @WebParam(name = "idbanco", targetNamespace = "")
         String idbanco,
@@ -73,12 +73,12 @@ public interface InterbancarioWS {
     /**
      * 
      * @return
-     *     returns java.util.List<co.edu.eam.ingesoft.pa.negocio.serviciosinterbancariosws.Banco>
+     *     returns java.util.List<co.edu.eam.pa.serviciosinterbancariosws.Banco>
      */
     @WebMethod
     @WebResult(name = "ListaBancos", targetNamespace = "")
-    @RequestWrapper(localName = "listarBancos", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.ingesoft.pa.negocio.serviciosinterbancariosws.ListarBancos")
-    @ResponseWrapper(localName = "listarBancosResponse", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.ingesoft.pa.negocio.serviciosinterbancariosws.ListarBancosResponse")
+    @RequestWrapper(localName = "listarBancos", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.pa.serviciosinterbancariosws.ListarBancos")
+    @ResponseWrapper(localName = "listarBancosResponse", targetNamespace = "http://www.eam.edu.co/interbancario", className = "co.edu.eam.pa.serviciosinterbancariosws.ListarBancosResponse")
     public List<Banco> listarBancos();
 
 }

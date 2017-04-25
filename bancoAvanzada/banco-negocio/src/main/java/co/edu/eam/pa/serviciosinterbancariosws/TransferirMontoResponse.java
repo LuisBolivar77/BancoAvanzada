@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para transferirMontoResponse complex type.
+ * <p>Java class for transferirMontoResponse complex type.
  * 
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="transferirMontoResponse">
@@ -34,7 +34,7 @@ public class TransferirMontoResponse {
     protected RespuestaServicio respuestaServicio;
 
     /**
-     * Obtiene el valor de la propiedad respuestaServicio.
+     * Gets the value of the respuestaServicio property.
      * 
      * @return
      *     possible object is
@@ -46,7 +46,7 @@ public class TransferirMontoResponse {
     }
 
     /**
-     * Define el valor de la propiedad respuestaServicio.
+     * Sets the value of the respuestaServicio property.
      * 
      * @param value
      *     allowed object is

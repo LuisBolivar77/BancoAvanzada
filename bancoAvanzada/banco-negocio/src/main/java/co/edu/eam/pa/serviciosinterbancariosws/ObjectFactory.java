@@ -10,7 +10,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the co.edu.eam.ingesoft.pa.negocio.serviciosinterbancariosws package. 
+ * generated in the co.edu.eam.pa.serviciosinterbancariosws package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -32,7 +32,7 @@ public class ObjectFactory {
     private final static QName _RegistrarCuentaAsociada_QNAME = new QName("http://www.eam.edu.co/interbancario", "registrarCuentaAsociada");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: co.edu.eam.ingesoft.pa.negocio.serviciosinterbancariosws
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: co.edu.eam.pa.serviciosinterbancariosws
      * 
      */
     public ObjectFactory() {

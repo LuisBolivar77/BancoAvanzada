@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para registrarCuentaAsociada complex type.
+ * <p>Java class for registrarCuentaAsociada complex type.
  * 
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="registrarCuentaAsociada">
@@ -48,7 +48,7 @@ public class RegistrarCuentaAsociada {
     protected String numerocuenta;
 
     /**
-     * Obtiene el valor de la propiedad idbanco.
+     * Gets the value of the idbanco property.
      * 
      * @return
      *     possible object is
@@ -60,7 +60,7 @@ public class RegistrarCuentaAsociada {
     }
 
     /**
-     * Define el valor de la propiedad idbanco.
+     * Sets the value of the idbanco property.
      * 
      * @param value
      *     allowed object is
@@ -72,7 +72,7 @@ public class RegistrarCuentaAsociada {
     }
 
     /**
-     * Obtiene el valor de la propiedad tipodoc.
+     * Gets the value of the tipodoc property.
      * 
      * @return
      *     possible object is
@@ -84,7 +84,7 @@ public class RegistrarCuentaAsociada {
     }
 
     /**
-     * Define el valor de la propiedad tipodoc.
+     * Sets the value of the tipodoc property.
      * 
      * @param value
      *     allowed object is
@@ -96,7 +96,7 @@ public class RegistrarCuentaAsociada {
     }
 
     /**
-     * Obtiene el valor de la propiedad numerodoc.
+     * Gets the value of the numerodoc property.
      * 
      * @return
      *     possible object is
@@ -108,7 +108,7 @@ public class RegistrarCuentaAsociada {
     }
 
     /**
-     * Define el valor de la propiedad numerodoc.
+     * Sets the value of the numerodoc property.
      * 
      * @param value
      *     allowed object is
@@ -120,7 +120,7 @@ public class RegistrarCuentaAsociada {
     }
 
     /**
-     * Obtiene el valor de la propiedad nombre.
+     * Gets the value of the nombre property.
      * 
      * @return
      *     possible object is
@@ -132,7 +132,7 @@ public class RegistrarCuentaAsociada {
     }
 
     /**
-     * Define el valor de la propiedad nombre.
+     * Sets the value of the nombre property.
      * 
      * @param value
      *     allowed object is
@@ -144,7 +144,7 @@ public class RegistrarCuentaAsociada {
     }
 
     /**
-     * Obtiene el valor de la propiedad numerocuenta.
+     * Gets the value of the numerocuenta property.
      * 
      * @return
      *     possible object is
@@ -156,7 +156,7 @@ public class RegistrarCuentaAsociada {
     }
 
     /**
-     * Define el valor de la propiedad numerocuenta.
+     * Sets the value of the numerocuenta property.
      * 
      * @param value
      *     allowed object is

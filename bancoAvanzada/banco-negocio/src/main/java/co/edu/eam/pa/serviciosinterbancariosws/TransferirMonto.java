@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para transferirMonto complex type.
+ * <p>Java class for transferirMonto complex type.
  * 
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="transferirMonto">
@@ -40,7 +40,7 @@ public class TransferirMonto {
     protected double monto;
 
     /**
-     * Obtiene el valor de la propiedad idbanco.
+     * Gets the value of the idbanco property.
      * 
      * @return
      *     possible object is
@@ -52,7 +52,7 @@ public class TransferirMonto {
     }
 
     /**
-     * Define el valor de la propiedad idbanco.
+     * Sets the value of the idbanco property.
      * 
      * @param value
      *     allowed object is
@@ -64,7 +64,7 @@ public class TransferirMonto {
     }
 
     /**
-     * Obtiene el valor de la propiedad numerocuenta.
+     * Gets the value of the numerocuenta property.
      * 
      * @return
      *     possible object is
@@ -76,7 +76,7 @@ public class TransferirMonto {
     }
 
     /**
-     * Define el valor de la propiedad numerocuenta.
+     * Sets the value of the numerocuenta property.
      * 
      * @param value
      *     allowed object is
@@ -88,7 +88,7 @@ public class TransferirMonto {
     }
 
     /**
-     * Obtiene el valor de la propiedad monto.
+     * Gets the value of the monto property.
      * 
      */
     public double getMonto() {
@@ -96,7 +96,7 @@ public class TransferirMonto {
     }
 
     /**
-     * Define el valor de la propiedad monto.
+     * Sets the value of the monto property.
      * 
      */
     public void setMonto(double value) {

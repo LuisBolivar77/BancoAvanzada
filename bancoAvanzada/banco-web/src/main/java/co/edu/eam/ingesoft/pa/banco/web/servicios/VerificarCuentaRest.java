@@ -14,7 +14,7 @@ import co.edu.eam.ingesoft.pa.negocio.beans.WebServicesEJB;
 //Para invocar un servicio se necesita
 /**
  * 
- * @author Didier_Narváez 
+ * @author Didier_Narvï¿½ez 
  * 1. la url del servicio:
  *  http://ip:puerto/<root>/<raizRest>/<pathclase>/<pathmetodo>
  */
@@ -33,5 +33,10 @@ public class VerificarCuentaRest {
 			@FormParam("tipoId") String tipoId) {
 		return cuentaAsociadaEJB.verificarCuenta(cuenta, cedula, tipoId);
 	}
+	
+	
+	
+	
+	
 
 }

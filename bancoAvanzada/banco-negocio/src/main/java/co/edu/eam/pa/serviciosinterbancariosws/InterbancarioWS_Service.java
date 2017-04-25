@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "InterbancarioWS", targetNamespace = "http://www.eam.edu.co/interbancario", wsdlLocation = "http://104.197.238.134:8080/interbancario/InterbancarioWS?wsdl")
+@WebServiceClient(name = "InterbancarioWS", targetNamespace = "http://www.eam.edu.co/interbancario", wsdlLocation = "http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS?wsdl")
 public class InterbancarioWS_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class InterbancarioWS_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://104.197.238.134:8080/interbancario/InterbancarioWS?wsdl");
+            url = new URL("http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -42,25 +42,25 @@ public class InterbancarioWS_Service
         super(__getWsdlLocation(), INTERBANCARIOWS_QNAME);
     }
 
-    public InterbancarioWS_Service(WebServiceFeature... features) {
-        super(__getWsdlLocation(), INTERBANCARIOWS_QNAME, features);
-    }
+//    public InterbancarioWS_Service(WebServiceFeature... features) {
+//        super(__getWsdlLocation(), INTERBANCARIOWS_QNAME, features);
+//    }
 
     public InterbancarioWS_Service(URL wsdlLocation) {
         super(wsdlLocation, INTERBANCARIOWS_QNAME);
     }
 
-    public InterbancarioWS_Service(URL wsdlLocation, WebServiceFeature... features) {
-        super(wsdlLocation, INTERBANCARIOWS_QNAME, features);
-    }
+//    public InterbancarioWS_Service(URL wsdlLocation, WebServiceFeature... features) {
+//        super(wsdlLocation, INTERBANCARIOWS_QNAME, features);
+//    }
 
     public InterbancarioWS_Service(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public InterbancarioWS_Service(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
-        super(wsdlLocation, serviceName, features);
-    }
+//    public InterbancarioWS_Service(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
+//        super(wsdlLocation, serviceName, features);
+//    }
 
     /**
      * 
