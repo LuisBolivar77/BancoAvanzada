@@ -24,6 +24,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
 import co.edu.eam.ingesoft.pa.negocio.beans.CodigoValidacionEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadaEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.ProductoEJB;
+import co.edu.eam.ingesoft.pa.negocio.beans.TransaccionEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.WebServicesEJB;
 import co.edu.eam.ingesoft.pa.negocio.exception.ExcepcionNegocio;
 
@@ -136,6 +137,9 @@ public class ControladorProductos implements Serializable {
 	 */
 	@EJB
 	private WebServicesEJB webServiceEJB;
+
+	@EJB
+	private TransaccionEJB transaccionEJB;
 
 	/**
 	 * 
@@ -255,34 +259,16 @@ public class ControladorProductos implements Serializable {
 
 	public void transferencia() {
 		String numCuenta = CuentaComboSelecionada;
-		String nomCuentaAso = cuentaAsociadaSelec;
-		CodigoValidacion codigo = codigoEJB.buscarCodigoValidacion(codigoVali);
-		Date fecha = new Date();
-
-		Product proCuenta = productoEJB.buscarProducto(numCuenta);
-		SavingAccount cuenta = (SavingAccount) proCuenta;
 		try {
-			if (codigovalidacion != null) {
-				if (codigo.getFecha().before(fecha)) {
-					if (codigovalidacion.equals(codigoVali)) {
-						productoEJB.transferenciaWeb(cuenta, valor);
-						Messages.addFlashGlobalInfo(" La transferencia se ha realizado con exito ");
-					} else {
-						Messages.addFlashGlobalInfo(" El codigo de validacion ingresado no es el correcto ");
-					}
-				} else {
-					Messages.addFlashGlobalInfo(" El codigo que ingrese a expirado, debes solicitar uno nuevo ");
-				}
-			} else {
-				Messages.addFlashGlobalInfo(" Es obligatorio ingresar el codigo de validacion ");
-			}
+			transaccionEJB.transferir(codigoVali, numCuenta, codigovalidacion, valor);
+			Messages.addGlobalInfo("La transferencia se ha realizado exitosamente");
 		} catch (ExcepcionNegocio e) {
 			e.getMessage();
 		}
 	}
 
 	public void verificarCuenta(CuentaAsociada cuenta) {
-			webServiceEJB.VerificarCuenta(cuenta);
+		webServiceEJB.VerificarCuenta(cuenta);
 
 	}
 
