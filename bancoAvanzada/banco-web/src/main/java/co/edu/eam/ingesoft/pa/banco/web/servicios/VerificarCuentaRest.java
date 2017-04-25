@@ -8,20 +8,22 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadaEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.WebServicesEJB;
 
 //Para invocar un servicio se necesita
 /**
  * 
- * @author Didier_Narváez 1. la url del servicio:
- *         http://ip:puerto/<root>/<raizRest>/<pathclase>/<pathmetodo>
+ * @author Didier_Narváez 
+ * 1. la url del servicio:
+ *  http://ip:puerto/<root>/<raizRest>/<pathclase>/<pathmetodo>
  */
 // <pathclase>=Cliente
 @Path("/verificarCuenta")
 public class VerificarCuentaRest {
 
 	@EJB
-	private WebServicesEJB webServiceEJB;
+	private CuentaAsociadaEJB cuentaAsociadaEJB;
 
 	@Path("/verificar")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -29,12 +31,7 @@ public class VerificarCuentaRest {
 	@POST
 	public boolean verificar(@FormParam("cuenta") String cuenta, @FormParam("id") String cedula,
 			@FormParam("tipoId") String tipoId) {
-		boolean verificado = webServiceEJB.buscar(cuenta, cedula, tipoId);
-		if (verificado) {
-			return true;
-		} else {
-			return false;
-		}
+		return cuentaAsociadaEJB.verificarCuenta(cuenta, cedula, tipoId);
 	}
 
 }

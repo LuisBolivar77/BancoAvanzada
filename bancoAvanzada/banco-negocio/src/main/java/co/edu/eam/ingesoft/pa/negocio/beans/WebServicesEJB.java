@@ -71,23 +71,4 @@ public class WebServicesEJB {
 
 	}
 
-	/**
-	 * Verifica si una cuenta esta asociada a un usuario
-	 * @param num Número de la cuenta
-	 * @param ced Nuúmero de identificación del usuario
-	 * @param tipoId Tipo de identificación del usuario
-	 * @return true, si la cuenta pertenece a este usuario, de lo contrario false
-	 */
-	public boolean buscar(String num, String ced, String tipoId) {
-		Query q = em.createNamedQuery(CuentaAsociada.LISTAR_CUENTAS_ASOCIADAS);
-		List<CuentaAsociada> lista = q.getResultList();
-		for (CuentaAsociada cuenta : lista) {
-			if (cuenta.getNumeroCuenta().equals(num) && cuenta.getNumDocumento().equals(ced)
-					&& cuenta.getTipoDocumento().equals(tipoId)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 }

@@ -730,10 +730,8 @@ public class ProductoEJB {
 			
 		}else{
 			throw new ExcepcionNegocio(" Saldo Insuficiente");
-		}
-		
-		
+		}		
 		
 	}
-
+	
 }
