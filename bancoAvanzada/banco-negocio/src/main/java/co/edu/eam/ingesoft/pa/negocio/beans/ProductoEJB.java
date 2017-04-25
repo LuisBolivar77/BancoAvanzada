@@ -734,4 +734,12 @@ public class ProductoEJB {
 		
 	}
 	
+	public void sumarMontoCuenta (String cuenta, double cantidad){
+		SavingAccount sa = (SavingAccount) buscarProducto(cuenta);
+		if (sa != null){
+			sa.setAmmount(sa.getAmmount()+cantidad);
+		}
+	}
+	
+	
 }
