@@ -205,8 +205,8 @@ public class ControladorProductos implements Serializable {
 	 */
 	public void crearCuentaAsociada() {
 
-		String nombre = bancoSeleccionado;
-		Banco banco = cuentaAsoEJB.buscarBanco(nombre);
+		String id = bancoSeleccionado;
+		Banco banco = cuentaAsoEJB.buscarBanco(id);
 
 		CuentaAsociada cuentaAso = new CuentaAsociada();
 		cuentaAso.setEstado("PENDIENTE");
@@ -269,6 +269,8 @@ public class ControladorProductos implements Serializable {
 
 	public void verificarCuenta(CuentaAsociada cuenta) {
 		webServiceEJB.VerificarCuenta(cuenta);
+		listaCuentasAsociadas(cliente);
+
 
 	}
 

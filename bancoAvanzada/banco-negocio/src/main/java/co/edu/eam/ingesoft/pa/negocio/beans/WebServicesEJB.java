@@ -45,7 +45,7 @@ public class WebServicesEJB {
 		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
 		InterbancarioWS service = cliente.getInterbancarioWSPort();
 
-		String endPointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
+		String endPointURL = "http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS";
 		BindingProvider bp = (BindingProvider) service;
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
 
@@ -62,10 +62,17 @@ public class WebServicesEJB {
 			tipoDoc = TipoDocumentoEnum.TI;
 		}
 
-		RespuestaServicio resp = service.registrarCuentaAsociada(cuenta.getNombreBanco().getId(), tipoDoc,
+		RespuestaServicio resp = service.registrarCuentaAsociada(cuenta.getNombreBanco().getId(), TipoDocumentoEnum.CC,
 				cuenta.getNumDocumento(), cuenta.getNombreCuenta(), cuenta.getNumeroCuenta());
 
-		System.out.println("Mensajeeeeeeeeeeee = " + resp.getMensaje());
+		if(resp.getMensaje().equals("0003")){
+			cuentaAsoEJB.eliminarCuenta(cuenta);
+		}
+		
+		if(resp.getMensaje().equals("0010")){
+			cuentaAsoEJB.eliminarCuenta(cuenta);
+		}
+
 		cuenta.setEstado(resp.getMensaje());
 		cuentaAsoEJB.editarCuentaAsociadda(cuenta);
 

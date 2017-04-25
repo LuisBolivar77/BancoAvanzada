@@ -43,8 +43,8 @@ public class CuentaAsociadaEJB {
 	 * @param nom
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Banco buscarBanco(String nom) {
-		return em.find(Banco.class, nom);
+	public Banco buscarBanco(String id) {
+		return em.find(Banco.class, id);
 	}
 
 	/**
@@ -92,9 +92,9 @@ public class CuentaAsociadaEJB {
 
 	/**
 	 * Verifica una cuenta de un cliente
-	 * @param num Número de la cuenta
-	 * @param id Número de identificaciónn
-	 * @param tipoId Tipo de identificación
+	 * @param num Nï¿½mero de la cuenta
+	 * @param id Nï¿½mero de identificaciï¿½nn
+	 * @param tipoId Tipo de identificaciï¿½n
 	 * @return true si la cuenta es del cliente, de lo contrario false
 	 */
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)

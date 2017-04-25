@@ -4,4 +4,5 @@ co/edu/eam/ingesoft/pa/banco/web/controladores/ControladorSesion.class
 co/edu/eam/ingesoft/pa/banco/web/servicios/VerificarCuentaRest.class
 co/edu/eam/ingesoft/pa/banco/web/controladores/ControladorCustomer.class
 co/edu/eam/ingesoft/pa/banco/web/servicios/ServiciosRest.class
+co/edu/eam/ingesoft/pa/banco/web/servicios/TransferenciaRest.class
 co/edu/eam/ingesoft/pa/banco/web/controladores/ControladorProductos.class
