@@ -1,7 +1,7 @@
-/Users/LuchoBolivar/git/BancoAvanzada/bancoAvanzada/banco-web/src/main/java/co/edu/eam/ingesoft/pa/banco/web/servicios/ServiciosRest.java
-/Users/LuchoBolivar/git/BancoAvanzada/bancoAvanzada/banco-web/src/main/java/co/edu/eam/ingesoft/pa/banco/web/controladores/ControladorPagoTarjeta.java
-/Users/LuchoBolivar/git/BancoAvanzada/bancoAvanzada/banco-web/src/main/java/co/edu/eam/ingesoft/pa/banco/web/servicios/VerificarCuentaRest.java
-/Users/LuchoBolivar/git/BancoAvanzada/bancoAvanzada/banco-web/src/main/java/co/edu/eam/ingesoft/pa/banco/web/controladores/ControladorSesion.java
-/Users/LuchoBolivar/git/BancoAvanzada/bancoAvanzada/banco-web/src/main/java/co/edu/eam/ingesoft/pa/banco/web/controladores/ControladorCustomer.java
-/Users/LuchoBolivar/git/BancoAvanzada/bancoAvanzada/banco-web/src/main/java/co/edu/eam/ingesoft/pa/banco/web/Seguro/FiltroSesion.java
-/Users/LuchoBolivar/git/BancoAvanzada/bancoAvanzada/banco-web/src/main/java/co/edu/eam/ingesoft/pa/banco/web/controladores/ControladorProductos.java
+C:\Users\didie\git\BancoAvanzada\bancoAvanzada\banco-web\src\main\java\co\edu\eam\ingesoft\pa\banco\web\controladores\ControladorProductos.java
+C:\Users\didie\git\BancoAvanzada\bancoAvanzada\banco-web\src\main\java\co\edu\eam\ingesoft\pa\banco\web\servicios\ServiciosBancoRest.java
+C:\Users\didie\git\BancoAvanzada\bancoAvanzada\banco-web\src\main\java\co\edu\eam\ingesoft\pa\banco\web\Seguro\FiltroSesion.java
+C:\Users\didie\git\BancoAvanzada\bancoAvanzada\banco-web\src\main\java\co\edu\eam\ingesoft\pa\banco\web\controladores\ControladorSesion.java
+C:\Users\didie\git\BancoAvanzada\bancoAvanzada\banco-web\src\main\java\co\edu\eam\ingesoft\pa\banco\web\controladores\ControladorCustomer.java
+C:\Users\didie\git\BancoAvanzada\bancoAvanzada\banco-web\src\main\java\co\edu\eam\ingesoft\pa\banco\web\controladores\ControladorPagoTarjeta.java
+C:\Users\didie\git\BancoAvanzada\bancoAvanzada\banco-web\src\main\java\co\edu\eam\ingesoft\pa\banco\web\servicios\ServiciosRest.java

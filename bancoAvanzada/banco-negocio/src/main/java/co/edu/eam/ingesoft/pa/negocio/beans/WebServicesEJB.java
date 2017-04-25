@@ -29,6 +29,9 @@ public class WebServicesEJB {
 
 	@EJB
 	private CuentaAsociadaEJB cuentaAsoEJB;
+	
+	@EJB
+	private ProductoEJB productoEJB;
 
 	/**
 	 * 
@@ -68,6 +71,28 @@ public class WebServicesEJB {
 		System.out.println("Mensajeeeeeeeeeeee = " + resp.getMensaje());
 		cuenta.setEstado(resp.getMensaje());
 		cuentaAsoEJB.editarCuentaAsociadda(cuenta);
+
+	}
+
+	public boolean recibirDineroWS(String id, String cuenta, double monto) {
+
+		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
+		InterbancarioWS service = cliente.getInterbancarioWSPort();
+
+		String endPointURL = "http://104.197.238.134:8080/interbancario/InterbancarioWS?wsdl";
+		BindingProvider bp = (BindingProvider) service;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
+
+		RespuestaServicio resp = service.transferirMonto(id, cuenta, monto);
+
+		System.out.println(resp.getMensaje());
+		
+		if (resp.getCodigo().equals("000")){
+			productoEJB.sumarMontoCuenta(cuenta, monto);
+			return true;			
+		} else {
+			return false;
+		}
 
 	}
 
