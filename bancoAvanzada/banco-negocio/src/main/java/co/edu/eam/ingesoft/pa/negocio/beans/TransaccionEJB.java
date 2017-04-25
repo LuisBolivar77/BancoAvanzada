@@ -11,8 +11,6 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.omnifaces.util.Messages;
-
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CodigoValidacion;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
