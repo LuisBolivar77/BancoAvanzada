@@ -14,6 +14,7 @@ import javax.xml.ws.BindingProvider;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Banco;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CuentaAsociada;
+import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
 import co.edu.eam.pa.clientews.Notificaciones;
@@ -36,6 +37,18 @@ public class CuentaAsociadaEJB {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void crearCuentaAsociada(CuentaAsociada cuentaAso) {
 		em.persist(cuentaAso);
+	}
+
+	/**
+	 * M�todo para buscar un producto
+	 * 
+	 * @param num
+	 *            N�mero del producto que se desea buscar
+	 * @return EL producto si lo encuentra, de lo contrario null
+	 */
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public CuentaAsociada buscarCuentaAso(int num) {
+		return em.find(CuentaAsociada.class, num);
 	}
 
 	/**
@@ -77,6 +90,18 @@ public class CuentaAsociadaEJB {
 		List<CuentaAsociada> lista = q.getResultList();
 		return lista;
 	}
+	
+	/**
+	 * 
+	 * @param c
+	 * @return
+	 */
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public List<CuentaAsociada> listacuentasAsociadasVerificadas() {
+		Query q = em.createNamedQuery(CuentaAsociada.LISTAR_CUENTAS_ASOCIADAS);
+		List<CuentaAsociada> lista = q.getResultList();
+		return lista;
+	}
 
 	/**
 	 * 
@@ -92,20 +117,56 @@ public class CuentaAsociadaEJB {
 
 	/**
 	 * Verifica una cuenta de un cliente
-	 * @param num N�mero de la cuenta
-	 * @param id N�mero de identificaci�nn
-	 * @param tipoId Tipo de identificaci�n
+	 * 
+	 * @param num
+	 *            N�mero de la cuenta
+	 * @param id
+	 *            N�mero de identificaci�nn
+	 * @param tipoId
+	 *            Tipo de identificaci�n
 	 * @return true si la cuenta es del cliente, de lo contrario false
 	 */
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public boolean verificarCuenta(String num, String id, String tipoId) {
 		SavingAccount sa = (SavingAccount) productoEJB.buscarProducto(num);
 		if (sa != null) {
-			if (sa.getCustomer().getIdNum().equals(id) && sa.getCustomer().getIdType().equals(tipoId)) {
+			String tipoDoc = casteoDocumento(sa.getCustomer().getIdType());
+			if (sa.getCustomer().getIdNum().equals(id) && tipoDoc.equals(tipoId)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
+	public String casteoDocumento(String doc) {
+
+		String tipoDoc = null;
+		if (doc.equals("Cedula")) {
+			tipoDoc = "CC";
+		}
+		if (doc.equals("Pasaporte")) {
+			tipoDoc = "PAS";
+		}
+		if (doc.equals("Tarjeta de Identidad")) {
+			tipoDoc = "TI";
+		}
+
+		return tipoDoc;
+	}
+	
+	public String casteoDocumentoSer(String doc) {
+
+		String tipoDoc = null;
+		if (doc.equals("CC")) {
+			tipoDoc = "Cedula";
+		}
+		if (doc.equals("PAS")) {
+			tipoDoc = "Pasaporte";
+		}
+		if (doc.equals("TI")) {
+			tipoDoc = "Tarjeta de Identidad";
+		}
+
+		return tipoDoc;
+	}
 }

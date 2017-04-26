@@ -53,7 +53,7 @@ public class CodigoValidacionEJB {
 		NotificacionesService cliente = new NotificacionesService();
 		Notificaciones service = cliente.getNotificacionesPort();
 		
-		String endPointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
+		String endPointURL = "http://104.155.128.249:8080/notificaciones/notificacionesService";
 		BindingProvider bp = (BindingProvider) service;
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
 		
@@ -77,7 +77,7 @@ public class CodigoValidacionEJB {
 		NotificacionesService cliente = new NotificacionesService();
 		Notificaciones service = cliente.getNotificacionesPort();
 		
-		String endPointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
+		String endPointURL = "http://104.155.128.249:8080/notificaciones/notificacionesService";
 		BindingProvider bp = (BindingProvider) service;
 		bp.getResponseContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
 		

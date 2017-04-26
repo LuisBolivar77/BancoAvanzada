@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import javax.xml.ws.BindingProvider;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CuentaAsociada;
+import co.edu.eam.ingesoft.pa.negocio.exception.ExcepcionNegocio;
 import co.edu.eam.pa.serviciosinterbancariosws.InterbancarioWS;
 import co.edu.eam.pa.serviciosinterbancariosws.InterbancarioWS_Service;
 import co.edu.eam.pa.serviciosinterbancariosws.RespuestaServicio;
@@ -29,7 +30,7 @@ public class WebServicesEJB {
 
 	@EJB
 	private CuentaAsociadaEJB cuentaAsoEJB;
-	
+
 	@EJB
 	private ProductoEJB productoEJB;
 
@@ -65,40 +66,16 @@ public class WebServicesEJB {
 			tipoDoc = TipoDocumentoEnum.TI;
 		}
 
-		RespuestaServicio resp = service.registrarCuentaAsociada(cuenta.getNombreBanco().getId(), TipoDocumentoEnum.CC,
+		RespuestaServicio resp = service.registrarCuentaAsociada(cuenta.getNombreBanco().getId(), tipoDoc,
 				cuenta.getNumDocumento(), cuenta.getNombreCuenta(), cuenta.getNumeroCuenta());
 
-		if(resp.getMensaje().equals("0003")){
+		if (resp.getCodigo().equals("0000") || resp.getCodigo().equals("0001")) {
+			cuenta.setEstado(resp.getMensaje());
+			cuentaAsoEJB.editarCuentaAsociadda(cuenta);
+		}else{
 			cuentaAsoEJB.eliminarCuenta(cuenta);
-		}
-		
-		if(resp.getMensaje().equals("0010")){
-			cuentaAsoEJB.eliminarCuenta(cuenta);
-		}
-
-		cuenta.setEstado(resp.getMensaje());
-		cuentaAsoEJB.editarCuentaAsociadda(cuenta);
-
-	}
-
-	public boolean recibirDineroWS(String id, String cuenta, double monto) {
-
-		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
-		InterbancarioWS service = cliente.getInterbancarioWSPort();
-
-		String endPointURL = "http://104.197.238.134:8080/interbancario/InterbancarioWS?wsdl";
-		BindingProvider bp = (BindingProvider) service;
-		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
-
-		RespuestaServicio resp = service.transferirMonto(id, cuenta, monto);
-
-		System.out.println(resp.getMensaje());
-		
-		if (resp.getCodigo().equals("000")){
-			productoEJB.sumarMontoCuenta(cuenta, monto);
-			return true;			
-		} else {
-			return false;
+			
+			
 		}
 
 	}
