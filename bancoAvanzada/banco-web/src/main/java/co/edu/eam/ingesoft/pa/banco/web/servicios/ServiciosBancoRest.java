@@ -18,6 +18,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CuentaAsociada;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
+import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
 import co.edu.eam.ingesoft.pa.negocio.beans.CodigoValidacionEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadaEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
@@ -72,12 +73,20 @@ public class ServiciosBancoRest {
 		return "ERROR";
 	}
 
-	@Path("/listarCuentasAsociadas")
+	@Path("/listarCuentasAsociadasVeriCliente")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@GET
-	public List<CuentaAsociada> listarCuentasAsociadas() {
-		List<CuentaAsociada> cuentas = cuentaAsociadaEJB.listacuentasAsociadasVerificadas();
+	public List<CuentaAsociada> listarCuentasAsociadas(@QueryParam("id") String id,
+			@QueryParam("tipoId") String tipoId) {
+
+		List<CuentaAsociada> cuentas = new ArrayList<CuentaAsociada>();
+		String tipoDoc = cuentaAsociadaEJB.casteoDocumentoSer(tipoId);
+		Customer cus = customerEJB.buscarCliente(tipoId, tipoDoc);
+		if (cus != null) {
+			cuentas = cuentaAsociadaEJB.listacuentasAsociadasVerificadas(cus);
+		}
+
 		return cuentas;
 	}
 
@@ -114,13 +123,12 @@ public class ServiciosBancoRest {
 		return false;
 
 	}
-	
-	
+
 	@Path("/listarBancos")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Bank> listarBancos (){
-        return webServicesEJB.listarBancos();        
-    }
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Bank> listarBancos() {
+		return webServicesEJB.listarBancos();
+	}
 
 }

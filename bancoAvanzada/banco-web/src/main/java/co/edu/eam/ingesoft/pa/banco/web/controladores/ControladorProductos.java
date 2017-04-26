@@ -217,7 +217,7 @@ public class ControladorProductos implements Serializable {
 		cuentaAso.setNumeroCuenta(numeroCuenta);
 		cuentaAso.setTipoDocumento(tipoSeleccionado);
 		System.out.println("el clienteeeeeeeeeeeeeee = " +cliente.getUserName());
-		cuentaAso.setUsuario(cliente);
+		cuentaAso.setCustomer(cliente.getCustomer());
 
 		cuentaAsoEJB.crearCuentaAsociada(cuentaAso);
 
