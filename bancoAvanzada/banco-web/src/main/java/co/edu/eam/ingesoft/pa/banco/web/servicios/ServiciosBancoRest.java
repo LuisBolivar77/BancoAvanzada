@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Bank;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CuentaAsociada;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Product;
@@ -113,5 +114,13 @@ public class ServiciosBancoRest {
 		return false;
 
 	}
+	
+	
+	@Path("/listarBancos")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Bank> listarBancos (){
+        return webServicesEJB.listarBancos();        
+    }
 
 }

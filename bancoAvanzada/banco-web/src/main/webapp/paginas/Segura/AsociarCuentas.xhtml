@@ -80,7 +80,7 @@
 					</p:column>
 					
 					<p:column headerText="#{msj['customer.validarCuenta']}">
-						<p:commandButton value="Validar" process="@this,"
+						<p:commandButton value="Validar" process="@this,tablaConsu" update="tablaConsu"
 							action="#{controladorProductos.verificarCuenta(ca)}" />
 					</p:column>
 

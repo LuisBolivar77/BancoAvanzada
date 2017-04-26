@@ -12,7 +12,7 @@ import javax.inject.Named;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
-import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Banco;
+import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Bank;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CodigoValidacion;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CreditCard;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CreditCardConsume;
@@ -62,7 +62,7 @@ public class ControladorProductos implements Serializable {
 	/**
 	 * 
 	 */
-	private List<Banco> bancos;
+	private List<Bank> bancos;
 
 	/**
 	 * 
@@ -206,7 +206,7 @@ public class ControladorProductos implements Serializable {
 	public void crearCuentaAsociada() {
 
 		String id = bancoSeleccionado;
-		Banco banco = cuentaAsoEJB.buscarBanco(id);
+		Bank banco = cuentaAsoEJB.buscarBanco(id);
 
 		CuentaAsociada cuentaAso = new CuentaAsociada();
 		cuentaAso.setEstado("PENDIENTE");
@@ -216,6 +216,7 @@ public class ControladorProductos implements Serializable {
 		cuentaAso.setNumDocumento(identificacion);
 		cuentaAso.setNumeroCuenta(numeroCuenta);
 		cuentaAso.setTipoDocumento(tipoSeleccionado);
+		System.out.println("el clienteeeeeeeeeeeeeee = " +cliente.getUserName());
 		cuentaAso.setUsuario(cliente);
 
 		cuentaAsoEJB.crearCuentaAsociada(cuentaAso);
@@ -270,7 +271,6 @@ public class ControladorProductos implements Serializable {
 	public void verificarCuenta(CuentaAsociada cuenta) {
 		webServiceEJB.VerificarCuenta(cuenta);
 		listaCuentasAsociadas(cliente);
-
 
 	}
 
@@ -382,7 +382,7 @@ public class ControladorProductos implements Serializable {
 	/**
 	 * @return the bancos
 	 */
-	public List<Banco> getBancos() {
+	public List<Bank> getBancos() {
 		return bancos;
 	}
 
@@ -390,7 +390,7 @@ public class ControladorProductos implements Serializable {
 	 * @param bancos
 	 *            the bancos to set
 	 */
-	public void setBancos(List<Banco> bancos) {
+	public void setBancos(List<Bank> bancos) {
 		this.bancos = bancos;
 	}
 

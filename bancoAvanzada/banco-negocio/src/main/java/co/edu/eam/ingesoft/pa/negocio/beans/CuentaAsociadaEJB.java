@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.xml.ws.BindingProvider;
 
-import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Banco;
+import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Bank;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CuentaAsociada;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
@@ -56,8 +56,8 @@ public class CuentaAsociadaEJB {
 	 * @param nom
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Banco buscarBanco(String id) {
-		return em.find(Banco.class, id);
+	public Bank buscarBanco(String id) {
+		return em.find(Bank.class, id);
 	}
 
 	/**
@@ -109,9 +109,9 @@ public class CuentaAsociadaEJB {
 	 * @return
 	 */
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public List<Banco> listaBancos() {
-		Query q = em.createNamedQuery(Banco.NOMBRE_CUENTAS);
-		List<Banco> lista = q.getResultList();
+	public List<Bank> listaBancos() {
+		Query q = em.createNamedQuery(Bank.NOMBRE_CUENTAS);
+		List<Bank> lista = q.getResultList();
 		return lista;
 	}
 

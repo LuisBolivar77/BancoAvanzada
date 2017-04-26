@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "T_CUENTA_ASOCIADA")
 @NamedQueries({
 		@NamedQuery(name = CuentaAsociada.CUENTAS_ASOCIADAS_USUARIO, query = "SELECT c FROM CuentaAsociada c WHERE c.usuario = ?1 "),
-		@NamedQuery(name= CuentaAsociada.LISTAR_CUENTAS_ASOCIADAS, query = "SELECT c FROM CuentaAsociada c")
+		@NamedQuery(name= CuentaAsociada.LISTAR_CUENTAS_ASOCIADAS, query = "SELECT c FROM CuentaAsociada c WHERE c.estado = 'Asociada'")
 		})
 public class CuentaAsociada implements Serializable {
 
@@ -39,7 +39,7 @@ public class CuentaAsociada implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "NOMBRE_BANCO")
-	private Banco nombreBanco;
+	private Bank nombreBanco;
 
 	@Column(name = "NUMERO_CUENTA")
 	private String numeroCuenta;
@@ -71,7 +71,7 @@ public class CuentaAsociada implements Serializable {
 	 * @param usuario
 	 * @param estado
 	 */
-	public CuentaAsociada(String nombreTitular, String numDocumento, String tipoDocumento, Banco nombreBanco,
+	public CuentaAsociada(String nombreTitular, String numDocumento, String tipoDocumento, Bank nombreBanco,
 			String numeroCuenta, String nombreCuenta, Usuario usuario, String estado) {
 		super();
 		this.nombreTitular = nombreTitular;
@@ -134,7 +134,7 @@ public class CuentaAsociada implements Serializable {
 	/**
 	 * @return the nombreBanco
 	 */
-	public Banco getNombreBanco() {
+	public Bank getNombreBanco() {
 		return nombreBanco;
 	}
 
@@ -142,7 +142,7 @@ public class CuentaAsociada implements Serializable {
 	 * @param nombreBanco
 	 *            the nombreBanco to set
 	 */
-	public void setNombreBanco(Banco nombreBanco) {
+	public void setNombreBanco(Bank nombreBanco) {
 		this.nombreBanco = nombreBanco;
 	}
 
@@ -212,6 +212,24 @@ public class CuentaAsociada implements Serializable {
 	 */
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	

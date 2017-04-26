@@ -12,9 +12,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name="T_BANCO")
 @NamedQueries({
-	@NamedQuery(name=Banco.NOMBRE_CUENTAS, query="SELECT b FROM Banco b ")
+	@NamedQuery(name=Bank.NOMBRE_CUENTAS, query="SELECT b FROM Bank b ")
 })
-public class Banco implements Serializable{
+public class Bank implements Serializable{
 	
 	public static final String NOMBRE_CUENTAS = "lista.nomCuentas";
 	
@@ -27,7 +27,7 @@ public class Banco implements Serializable{
 	private String nombre;
 	
 	
-	public Banco() {
+	public Bank() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -36,7 +36,7 @@ public class Banco implements Serializable{
 	 * @param id
 	 * @param nombre
 	 */
-	public Banco(String id, String nombre) {
+	public Bank(String id, String nombre) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
