@@ -14,6 +14,7 @@ import javax.xml.ws.BindingProvider;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Bank;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CuentaAsociada;
+import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
@@ -97,8 +98,9 @@ public class CuentaAsociadaEJB {
 	 * @return
 	 */
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public List<CuentaAsociada> listacuentasAsociadasVerificadas() {
+	public List<CuentaAsociada> listacuentasAsociadasVerificadas(Customer c) {
 		Query q = em.createNamedQuery(CuentaAsociada.LISTAR_CUENTAS_ASOCIADAS);
+		q.setParameter(1, c);
 		List<CuentaAsociada> lista = q.getResultList();
 		return lista;
 	}

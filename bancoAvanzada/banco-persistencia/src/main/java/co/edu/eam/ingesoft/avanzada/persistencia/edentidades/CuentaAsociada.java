@@ -8,17 +8,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "T_CUENTA_ASOCIADA")
 @NamedQueries({
-		@NamedQuery(name = CuentaAsociada.CUENTAS_ASOCIADAS_USUARIO, query = "SELECT c FROM CuentaAsociada c WHERE c.usuario = ?1 "),
-		@NamedQuery(name= CuentaAsociada.LISTAR_CUENTAS_ASOCIADAS, query = "SELECT c FROM CuentaAsociada c WHERE c.estado = 'Asociada'")
-		})
+		@NamedQuery(name = CuentaAsociada.CUENTAS_ASOCIADAS_USUARIO, query = "SELECT c FROM CuentaAsociada c WHERE c.customer = ?1 "),
+		@NamedQuery(name = CuentaAsociada.LISTAR_CUENTAS_ASOCIADAS, query = "SELECT c FROM CuentaAsociada c WHERE c.customer = ?1 AND c.estado = 'Asociada'") })
 public class CuentaAsociada implements Serializable {
 
 	public static final String CUENTAS_ASOCIADAS_USUARIO = "lista.cuentasAsociadas";
@@ -47,9 +48,10 @@ public class CuentaAsociada implements Serializable {
 	@Column(name = "NOMBRE_CUENTA")
 	private String nombreCuenta;
 
-	@ManyToOne(cascade = {})
-	@JoinColumn(name = "userName")
-	private Usuario usuario;
+	@ManyToOne
+	@JoinColumns({ @JoinColumn(name = "idType", referencedColumnName = "identification_type"),
+			@JoinColumn(name = "idNum", referencedColumnName = "identification_number"), })
+	private Customer customer;
 
 	@Column(name = "estado")
 	private String estado;
@@ -57,8 +59,6 @@ public class CuentaAsociada implements Serializable {
 	public CuentaAsociada() {
 		// TODO Auto-generated constructor stub
 	}
-
-	
 
 	/**
 	 * @param id
@@ -68,19 +68,20 @@ public class CuentaAsociada implements Serializable {
 	 * @param nombreBanco
 	 * @param numeroCuenta
 	 * @param nombreCuenta
-	 * @param usuario
+	 * @param customer
 	 * @param estado
 	 */
-	public CuentaAsociada(String nombreTitular, String numDocumento, String tipoDocumento, Bank nombreBanco,
-			String numeroCuenta, String nombreCuenta, Usuario usuario, String estado) {
+	public CuentaAsociada(int id, String nombreTitular, String numDocumento, String tipoDocumento, Bank nombreBanco,
+			String numeroCuenta, String nombreCuenta, Customer customer, String estado) {
 		super();
+		this.id = id;
 		this.nombreTitular = nombreTitular;
 		this.numDocumento = numDocumento;
 		this.tipoDocumento = tipoDocumento;
 		this.nombreBanco = nombreBanco;
 		this.numeroCuenta = numeroCuenta;
 		this.nombreCuenta = nombreCuenta;
-		this.usuario = usuario;
+		this.customer = customer;
 		this.estado = estado;
 	}
 
@@ -182,39 +183,19 @@ public class CuentaAsociada implements Serializable {
 	}
 
 	/**
-	 * @return the usuario
-	 */
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	/**
-	 * @param usuario
-	 *            the usuario to set
-	 */
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-
-
-	/**
 	 * @return the estado
 	 */
 	public String getEstado() {
 		return estado;
 	}
 
-
-
 	/**
-	 * @param estado the estado to set
+	 * @param estado
+	 *            the estado to set
 	 */
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-
-
 
 	/**
 	 * @return the id
@@ -223,17 +204,27 @@ public class CuentaAsociada implements Serializable {
 		return id;
 	}
 
-
-
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	
-	
-	
+	/**
+	 * @return the customer
+	 */
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	/**
+	 * @param customer
+	 *            the customer to set
+	 */
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
 }
