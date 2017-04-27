@@ -77,14 +77,32 @@ public class ServiciosBancoRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@GET
+	public List<CuentaAsociada> listarCuentasAsociadasVeri(@QueryParam("id") String id,
+			@QueryParam("tipoId") String tipoId) {
+
+		List<CuentaAsociada> cuentas = new ArrayList<CuentaAsociada>();
+		String tipoDoc = cuentaAsociadaEJB.casteoDocumentoSer(tipoId);
+		Customer cus = customerEJB.buscarCliente(id, tipoDoc);
+		if (cus != null) {
+			cuentas = cuentaAsociadaEJB.listacuentasAsociadasVerificadas(cus);
+		}
+
+		return cuentas;
+	}
+	
+	
+	@Path("/listarCuentasAsociadasCliente")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@GET
 	public List<CuentaAsociada> listarCuentasAsociadas(@QueryParam("id") String id,
 			@QueryParam("tipoId") String tipoId) {
 
 		List<CuentaAsociada> cuentas = new ArrayList<CuentaAsociada>();
 		String tipoDoc = cuentaAsociadaEJB.casteoDocumentoSer(tipoId);
-		Customer cus = customerEJB.buscarCliente(tipoId, tipoDoc);
+		Customer cus = customerEJB.buscarCliente(id, tipoDoc);
 		if (cus != null) {
-			cuentas = cuentaAsociadaEJB.listacuentasAsociadasVerificadas(cus);
+			cuentas = cuentaAsociadaEJB.listacuentasAsociadas(cus);
 		}
 
 		return cuentas;
@@ -112,6 +130,8 @@ public class ServiciosBancoRest {
 	@GET
 	public boolean generarEnviarCodigoVali(@QueryParam("id") String cedula, @QueryParam("tipoId") String tipoId) {
 
+		System.out.println("numero Iddddddddddddddd = " + cedula);
+		System.out.println("numero Iddddddddddddddd = " + tipoId);
 		String tipoDoc = cuentaAsociadaEJB.casteoDocumentoSer(tipoId);
 		Customer cus = customerEJB.buscarCliente(cedula, tipoDoc);
 		String codigo = codigoEJB.numeroCodigoValidacion();

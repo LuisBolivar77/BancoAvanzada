@@ -37,6 +37,9 @@ public class WebServicesEJB {
 	@EJB
 	private ProductoEJB productoEJB;
 
+	@EJB
+	private BankEJB bancoEJB;
+
 	/**
 	 * 
 	 * @param nombre
@@ -75,36 +78,36 @@ public class WebServicesEJB {
 		if (resp.getCodigo().equals("0000") || resp.getCodigo().equals("0001")) {
 			cuenta.setEstado(resp.getMensaje());
 			cuentaAsoEJB.editarCuentaAsociadda(cuenta);
-		}else{
+		} else {
 			cuentaAsoEJB.eliminarCuenta(cuenta);
-			
-			
+
 		}
 
 	}
-	
+
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Bank> listarBancos() {
+	public List<Bank> listarBancos() {
 
-        InterbancarioWS_Service cliente = new InterbancarioWS_Service();
-        InterbancarioWS service = cliente.getInterbancarioWSPort();
+		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
+		InterbancarioWS service = cliente.getInterbancarioWSPort();
 
-        String endPointURL = "http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS";
-        BindingProvider bp = (BindingProvider) service;
-        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
+		String endPointURL = "http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS";
+		BindingProvider bp = (BindingProvider) service;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
 
-        List<Banco> lista = service.listarBancos();
-        List<Bank> bancos = new ArrayList<Bank>();
+		List<Banco> lista = service.listarBancos();
+		List<Bank> bancos = new ArrayList<Bank>();
 
-        for (Banco banco : lista) {
-            Bank b = new Bank();
-            b.setId(banco.getCodigo());
-            b.setNombre(banco.getNombre());
-            bancos.add(b);
-        }
+		for (Banco banco : lista) {
+			Bank b = new Bank();
+			b.setId(banco.getCodigo());
+			b.setNombre(banco.getNombre());
+			bancos.add(b);
+			bancoEJB.agregarBanco(b);
+		}
 
-        return bancos;
+		return bancos;
 
-    }
+	}
 
 }

@@ -145,7 +145,7 @@ public class ControladorProductos implements Serializable {
 	 * 
 	 * @param u
 	 */
-	public void listaCuentasAsociadas(Usuario u) {
+	public void listaCuentasAsociadas(Customer u) {
 		cuentasAsociadas = cuentaAsoEJB.listacuentasAsociadas(u);
 	}
 
@@ -194,7 +194,7 @@ public class ControladorProductos implements Serializable {
 		cliente = Faces.getApplicationAttribute("usuario");
 		listarCuentasInfo(cliente.getCustomer());
 		listaBancos();
-		listaCuentasAsociadas(cliente);
+		listaCuentasAsociadas(cliente.getCustomer());
 		cargarcuentas(cliente.getCustomer());
 		listarTarjetas(cliente.getCustomer());
 
@@ -221,7 +221,7 @@ public class ControladorProductos implements Serializable {
 
 		cuentaAsoEJB.crearCuentaAsociada(cuentaAso);
 
-		listaCuentasAsociadas(cliente);
+		listaCuentasAsociadas(cliente.getCustomer());
 		Messages.addFlashGlobalInfo(" La cuenta se ha registrado correctamente ");
 
 	}
@@ -232,7 +232,7 @@ public class ControladorProductos implements Serializable {
 
 	public void borrarCuenta(CuentaAsociada cuentaAso) {
 		cuentaAsoEJB.eliminarCuenta(cuentaAso);
-		listaCuentasAsociadas(cliente);
+		listaCuentasAsociadas(cliente.getCustomer());
 
 	}
 
@@ -270,7 +270,7 @@ public class ControladorProductos implements Serializable {
 
 	public void verificarCuenta(CuentaAsociada cuenta) {
 		webServiceEJB.VerificarCuenta(cuenta);
-		listaCuentasAsociadas(cliente);
+		listaCuentasAsociadas(cliente.getCustomer());
 
 	}
 

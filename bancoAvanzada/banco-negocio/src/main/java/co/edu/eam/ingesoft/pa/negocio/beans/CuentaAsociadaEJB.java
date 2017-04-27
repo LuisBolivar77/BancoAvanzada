@@ -85,7 +85,7 @@ public class CuentaAsociadaEJB {
 	 * @return
 	 */
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public List<CuentaAsociada> listacuentasAsociadas(Usuario c) {
+	public List<CuentaAsociada> listacuentasAsociadas(Customer c) {
 		Query q = em.createNamedQuery(CuentaAsociada.CUENTAS_ASOCIADAS_USUARIO);
 		q.setParameter(1, c);
 		List<CuentaAsociada> lista = q.getResultList();
