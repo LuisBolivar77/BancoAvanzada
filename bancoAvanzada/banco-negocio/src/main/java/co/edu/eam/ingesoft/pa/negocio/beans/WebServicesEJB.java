@@ -95,25 +95,15 @@ public class WebServicesEJB {
 
 		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
 		InterbancarioWS service = cliente.getInterbancarioWSPort();
-	public List<Bank> listarBancos() {
-
-		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
-		InterbancarioWS service = cliente.getInterbancarioWSPort();
 
 		String endPointURL = "http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS";
 		BindingProvider bp = (BindingProvider) service;
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
 
-		List<Banco> lista = service.listarBancos();
-		List<Bank> bancos = new ArrayList<Bank>();
-
-		String endPointURL = "http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS";
-		BindingProvider bp = (BindingProvider) service;
-		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
+		
 
 		List<Banco> lista = service.listarBancos();
 		List<Bank> bancos = new ArrayList<Bank>();
-			agregarBancos(banco.getCodigo(), banco.getNombre());
 
 		for (Banco banco : lista) {
 			Bank b = new Bank();
@@ -122,7 +112,7 @@ public class WebServicesEJB {
 			bancos.add(b);
 			bancoEJB.agregarBanco(b);
 		}
-		}
+		
 
 		return bancos;
 
@@ -133,7 +123,7 @@ public class WebServicesEJB {
 		
 		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
 		InterbancarioWS service = cliente.getInterbancarioWSPort();
-	}
+	
 
 		String endPointURL = "http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS";
 		BindingProvider bp = (BindingProvider) service;
