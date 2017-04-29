@@ -54,9 +54,14 @@ public class ServiciosBancoRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@POST
-	public boolean verificar(@FormParam("cuenta") String cuenta, @FormParam("id") String cedula,
+	public String verificar(@FormParam("cuenta") String cuenta, @FormParam("id") String cedula,
 			@FormParam("tipoId") String tipoId) {
-		return cuentaAsociadaEJB.verificarCuenta(cuenta, cedula, tipoId);
+		boolean res = cuentaAsociadaEJB.verificarCuenta(cuenta, cedula, tipoId);
+		if (res == true) {
+			return "OK";
+		}
+		return "ERROR";
+
 	}
 
 	@Path("/transferir")
@@ -89,8 +94,7 @@ public class ServiciosBancoRest {
 
 		return cuentas;
 	}
-	
-	
+
 	@Path("/listarCuentasAsociadasCliente")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -130,8 +134,6 @@ public class ServiciosBancoRest {
 	@GET
 	public boolean generarEnviarCodigoVali(@QueryParam("id") String cedula, @QueryParam("tipoId") String tipoId) {
 
-		System.out.println("numero Iddddddddddddddd = " + cedula);
-		System.out.println("numero Iddddddddddddddd = " + tipoId);
 		String tipoDoc = cuentaAsociadaEJB.casteoDocumentoSer(tipoId);
 		Customer cus = customerEJB.buscarCliente(cedula, tipoDoc);
 		String codigo = codigoEJB.numeroCodigoValidacion();
@@ -150,5 +152,9 @@ public class ServiciosBancoRest {
 	public List<Bank> listarBancos() {
 		return webServicesEJB.listarBancos();
 	}
+	
+	
+	
+	
 
 }

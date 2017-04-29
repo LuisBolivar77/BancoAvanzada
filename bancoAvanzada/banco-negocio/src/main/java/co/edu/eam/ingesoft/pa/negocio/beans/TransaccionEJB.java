@@ -52,7 +52,7 @@ public class TransaccionEJB {
 		Product proCuenta = productoEJB.buscarProducto(numCuenta);
 		SavingAccount cuenta = (SavingAccount) proCuenta;
 
-		if (codigovalidacion != null) {
+
 			if (codigo.getFecha().before(fecha)) {
 				if (codigovalidacion.equals(codigoVali)) {
 					productoEJB.transferenciaWeb(cuenta, valor);
@@ -62,10 +62,6 @@ public class TransaccionEJB {
 			} else {
 				throw new ExcepcionNegocio("El codigo que ingrese a expirado, debes solicitar uno nuevo");
 			}
-		} else {
-			throw new ExcepcionNegocio("Es obligatorio ingresar el codigo de validacion ");
 		}
-
-	}
 
 }

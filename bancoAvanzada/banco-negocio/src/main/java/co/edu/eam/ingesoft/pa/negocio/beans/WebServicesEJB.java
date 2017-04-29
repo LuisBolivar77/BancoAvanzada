@@ -109,5 +109,25 @@ public class WebServicesEJB {
 		return bancos;
 
 	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean transferirDinero(CuentaAsociada cuenta, double monto){
+		
+		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
+		InterbancarioWS service = cliente.getInterbancarioWSPort();
+
+		String endPointURL = "http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS";
+		BindingProvider bp = (BindingProvider) service;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
+		
+		RespuestaServicio resp = service.transferirMonto(cuenta.getNombreBanco().getId(), cuenta.getNumeroCuenta(), monto);
+		System.out.println("mensajeeeeeeee = " + resp.getMensaje());
+		System.out.println("numero cuentaaaaaaa = " + cuenta.getNumeroCuenta());
+		if(resp.getCodigo().equals("0000")){
+			return true;
+		}
+		
+		return false;
+	}
 
 }

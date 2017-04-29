@@ -59,12 +59,12 @@ public class CodigoValidacionEJB {
 		
 		Mail correo = new Mail();
 		correo.setBody(codigo);
-		correo.setFrom("HelloMoto");
+		correo.setFrom("HelloMoto@gmail.com");
 		correo.setTo(email);
 		correo.setSubject("Segunda Clave QUINDI BANCO");
 		
 		RespuestaNotificacion res = service.enviarMail(correo);
-		System.out.println(res.getMensaje());
+		System.out.println("mensajeeeeeeeeeee = " + res.getMensaje());
 
 	}
 	
