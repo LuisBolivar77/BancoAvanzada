@@ -15,6 +15,7 @@ import javax.xml.ws.BindingProvider;
 
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Bank;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.CuentaAsociada;
+import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
 import co.edu.eam.ingesoft.pa.negocio.exception.ExcepcionNegocio;
 import co.edu.eam.pa.serviciosinterbancariosws.Banco;
 import co.edu.eam.pa.serviciosinterbancariosws.InterbancarioWS;
@@ -84,6 +85,7 @@ public class WebServicesEJB {
 
 	/**
 	 * Obtiene la lista de bancos registrados
+	 * 
 	 * @return la lista de los bancos
 	 */
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -130,6 +132,25 @@ public class WebServicesEJB {
 			b.setNombre(nombre);
 			em.persist(b);
 		}
+	}
+
+	public boolean transferirWS(String idbanco, String numerocuenta, double monto) {
+
+		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
+		InterbancarioWS service = cliente.getInterbancarioWSPort();
+
+		String endPointURL = "http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS";
+		BindingProvider bp = (BindingProvider) service;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
+
+		RespuestaServicio respuesta = service.transferirMonto(idbanco, numerocuenta, monto);
+
+		if (respuesta.getCodigo().equals("0000")) {
+			return true;
+		}
+
+		return false;
+
 	}
 
 }
