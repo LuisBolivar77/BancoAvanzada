@@ -85,7 +85,7 @@ public class CuentaAsociadaEJB {
 	 * @return
 	 */
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public List<CuentaAsociada> listacuentasAsociadas(Usuario c) {
+	public List<CuentaAsociada> listacuentasAsociadas(Customer c) {
 		Query q = em.createNamedQuery(CuentaAsociada.CUENTAS_ASOCIADAS_USUARIO);
 		q.setParameter(1, c);
 		List<CuentaAsociada> lista = q.getResultList();
@@ -144,13 +144,13 @@ public class CuentaAsociadaEJB {
 
 		String tipoDoc = null;
 		if (doc.equals("Cedula")) {
-			tipoDoc = "CC";
+			tipoDoc = "1";
 		}
 		if (doc.equals("Pasaporte")) {
-			tipoDoc = "PAS";
+			tipoDoc = "3";
 		}
 		if (doc.equals("Tarjeta de Identidad")) {
-			tipoDoc = "TI";
+			tipoDoc = "2";
 		}
 
 		return tipoDoc;
@@ -159,13 +159,13 @@ public class CuentaAsociadaEJB {
 	public String casteoDocumentoSer(String doc) {
 
 		String tipoDoc = null;
-		if (doc.equals("CC")) {
+		if (doc.equals("1")) {
 			tipoDoc = "Cedula";
 		}
-		if (doc.equals("PAS")) {
+		if (doc.equals("3")) {
 			tipoDoc = "Pasaporte";
 		}
-		if (doc.equals("TI")) {
+		if (doc.equals("2")) {
 			tipoDoc = "Tarjeta de Identidad";
 		}
 

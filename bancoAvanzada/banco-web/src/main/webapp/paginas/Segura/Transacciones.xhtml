@@ -20,11 +20,11 @@
 
 				<h:outputLabel for="cbcuentaAsoci" id="lbcuentaAsoci"
 					value="#{msj['customer.seleccioneCuentaAsociada']}" />
-				<h:selectOneMenu id="cbcuenta"
+				<h:selectOneMenu id="cbcuentaAsoci"
 					value="#{controladorProductos.cuentaAsociadaSelec}">
 
 					<f:selectItems value="#{controladorProductos.cuentasAsociadas}"
-						var="cuentaAso" itemValue="#{cuentaAso}" itemLabel="#{cuentaAso.nombreCuenta}" />
+						var="cuentaAso" itemValue="#{cuentaAso.id}" itemLabel="#{cuentaAso.nombreCuenta}" />
 
 				</h:selectOneMenu>
 

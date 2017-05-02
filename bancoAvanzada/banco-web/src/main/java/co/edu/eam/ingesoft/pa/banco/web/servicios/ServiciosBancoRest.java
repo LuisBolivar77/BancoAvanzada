@@ -54,9 +54,14 @@ public class ServiciosBancoRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@POST
-	public boolean verificar(@FormParam("cuenta") String cuenta, @FormParam("id") String cedula,
+	public String verificar(@FormParam("cuenta") String cuenta, @FormParam("id") String cedula,
 			@FormParam("tipoId") String tipoId) {
-		return cuentaAsociadaEJB.verificarCuenta(cuenta, cedula, tipoId);
+		boolean res = cuentaAsociadaEJB.verificarCuenta(cuenta, cedula, tipoId);
+		if (res == true) {
+			return "OK";
+		}
+		return "ERROR";
+
 	}
 
 	@Path("/transferir")
@@ -77,14 +82,31 @@ public class ServiciosBancoRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@GET
+	public List<CuentaAsociada> listarCuentasAsociadasVeri(@QueryParam("id") String id,
+			@QueryParam("tipoId") String tipoId) {
+
+		List<CuentaAsociada> cuentas = new ArrayList<CuentaAsociada>();
+		String tipoDoc = cuentaAsociadaEJB.casteoDocumentoSer(tipoId);
+		Customer cus = customerEJB.buscarCliente(id, tipoDoc);
+		if (cus != null) {
+			cuentas = cuentaAsociadaEJB.listacuentasAsociadasVerificadas(cus);
+		}
+
+		return cuentas;
+	}
+
+	@Path("/listarCuentasAsociadasCliente")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@GET
 	public List<CuentaAsociada> listarCuentasAsociadas(@QueryParam("id") String id,
 			@QueryParam("tipoId") String tipoId) {
 
 		List<CuentaAsociada> cuentas = new ArrayList<CuentaAsociada>();
 		String tipoDoc = cuentaAsociadaEJB.casteoDocumentoSer(tipoId);
-		Customer cus = customerEJB.buscarCliente(tipoId, tipoDoc);
+		Customer cus = customerEJB.buscarCliente(id, tipoDoc);
 		if (cus != null) {
-			cuentas = cuentaAsociadaEJB.listacuentasAsociadasVerificadas(cus);
+			cuentas = cuentaAsociadaEJB.listacuentasAsociadas(cus);
 		}
 
 		return cuentas;
@@ -130,5 +152,9 @@ public class ServiciosBancoRest {
 	public List<Bank> listarBancos() {
 		return webServicesEJB.listarBancos();
 	}
+	
+	
+	
+	
 
 }

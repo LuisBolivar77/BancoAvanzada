@@ -37,6 +37,9 @@ public class ControladorProductos implements Serializable {
 	 */
 	private double valor;
 
+	/**
+	 * 
+	 */
 	private String codigovalidacion;
 
 	/**
@@ -77,7 +80,7 @@ public class ControladorProductos implements Serializable {
 	/**
 	 * 
 	 */
-	private String cuentaAsociadaSelec;
+	private int cuentaAsociadaSelec;
 
 	/**
 	 * 
@@ -145,7 +148,7 @@ public class ControladorProductos implements Serializable {
 	 * 
 	 * @param u
 	 */
-	public void listaCuentasAsociadas(Usuario u) {
+	public void listaCuentasAsociadas(Customer u) {
 		cuentasAsociadas = cuentaAsoEJB.listacuentasAsociadas(u);
 	}
 
@@ -194,7 +197,7 @@ public class ControladorProductos implements Serializable {
 		cliente = Faces.getApplicationAttribute("usuario");
 		listarCuentasInfo(cliente.getCustomer());
 		listaBancos();
-		listaCuentasAsociadas(cliente);
+		listaCuentasAsociadas(cliente.getCustomer());
 		cargarcuentas(cliente.getCustomer());
 		listarTarjetas(cliente.getCustomer());
 
@@ -216,12 +219,12 @@ public class ControladorProductos implements Serializable {
 		cuentaAso.setNumDocumento(identificacion);
 		cuentaAso.setNumeroCuenta(numeroCuenta);
 		cuentaAso.setTipoDocumento(tipoSeleccionado);
-		System.out.println("el clienteeeeeeeeeeeeeee = " +cliente.getUserName());
+		System.out.println("el clienteeeeeeeeeeeeeee = " + cliente.getUserName());
 		cuentaAso.setCustomer(cliente.getCustomer());
 
 		cuentaAsoEJB.crearCuentaAsociada(cuentaAso);
 
-		listaCuentasAsociadas(cliente);
+		listaCuentasAsociadas(cliente.getCustomer());
 		Messages.addFlashGlobalInfo(" La cuenta se ha registrado correctamente ");
 
 	}
@@ -232,7 +235,7 @@ public class ControladorProductos implements Serializable {
 
 	public void borrarCuenta(CuentaAsociada cuentaAso) {
 		cuentaAsoEJB.eliminarCuenta(cuentaAso);
-		listaCuentasAsociadas(cliente);
+		listaCuentasAsociadas(cliente.getCustomer());
 
 	}
 
@@ -260,17 +263,26 @@ public class ControladorProductos implements Serializable {
 
 	public void transferencia() {
 		String numCuenta = CuentaComboSelecionada;
-		try {
-			transaccionEJB.transferir(codigoVali, numCuenta, codigovalidacion, valor);
-			Messages.addGlobalInfo("La transferencia se ha realizado exitosamente");
-		} catch (ExcepcionNegocio e) {
-			e.getMessage();
+		int id = cuentaAsociadaSelec;
+		CuentaAsociada cuenta = cuentaAsoEJB.buscarCuentaAso(id);
+		if (codigovalidacion != null){
+			try {
+				boolean resp = webServiceEJB.transferirDinero(cuenta, valor);
+				if (resp == true) {
+					transaccionEJB.transferir(codigoVali, numCuenta, codigovalidacion, valor);
+					Messages.addGlobalInfo("La transferencia se ha realizado exitosamente");
+				}
+			} catch (ExcepcionNegocio e) {
+				e.getMessage();
+			}
+		} else {
+			Messages.addGlobalInfo("Es obligatorio ingresar el codigo de validacion ");
 		}
 	}
 
 	public void verificarCuenta(CuentaAsociada cuenta) {
 		webServiceEJB.VerificarCuenta(cuenta);
-		listaCuentasAsociadas(cliente);
+		listaCuentasAsociadas(cliente.getCustomer());
 
 	}
 
@@ -472,7 +484,7 @@ public class ControladorProductos implements Serializable {
 	/**
 	 * @return the cuentaAsociadaSelec
 	 */
-	public String getCuentaAsociadaSelec() {
+	public int getCuentaAsociadaSelec() {
 		return cuentaAsociadaSelec;
 	}
 
@@ -480,7 +492,7 @@ public class ControladorProductos implements Serializable {
 	 * @param cuentaAsociadaSelec
 	 *            the cuentaAsociadaSelec to set
 	 */
-	public void setCuentaAsociadaSelec(String cuentaAsociadaSelec) {
+	public void setCuentaAsociadaSelec(int cuentaAsociadaSelec) {
 		this.cuentaAsociadaSelec = cuentaAsociadaSelec;
 	}
 

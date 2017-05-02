@@ -85,8 +85,6 @@ public class CuentaAsociada implements Serializable {
 		this.estado = estado;
 	}
 
-
-
 	/**
 	 * @return the nombreTitular
 	 */

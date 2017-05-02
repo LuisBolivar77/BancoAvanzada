@@ -38,6 +38,9 @@ public class WebServicesEJB {
 	@EJB
 	private ProductoEJB productoEJB;
 
+	@EJB
+	private BankEJB bancoEJB;
+
 	/**
 	 * 
 	 * @param nombre
@@ -83,6 +86,7 @@ public class WebServicesEJB {
 
 	}
 
+
 	/**
 	 * Obtiene la lista de bancos registrados
 	 * 
@@ -98,6 +102,8 @@ public class WebServicesEJB {
 		BindingProvider bp = (BindingProvider) service;
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
 
+		
+
 		List<Banco> lista = service.listarBancos();
 		List<Bank> bancos = new ArrayList<Bank>();
 
@@ -106,32 +112,33 @@ public class WebServicesEJB {
 			b.setId(banco.getCodigo());
 			b.setNombre(banco.getNombre());
 			bancos.add(b);
-
-			agregarBancos(banco.getCodigo(), banco.getNombre());
-
+			bancoEJB.agregarBanco(b);
 		}
+		
 
 		return bancos;
 
 	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean transferirDinero(CuentaAsociada cuenta, double monto){
+		
+		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
+		InterbancarioWS service = cliente.getInterbancarioWSPort();
+	
 
-	/**
-	 * Registra un banco, si no se encuentra registrado en la base de datos
-	 * 
-	 * @param id
-	 *            código del banco
-	 * @param nombre,
-	 *            nombre del banco
-	 */
-	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void agregarBancos(String id, String nombre) {
-		Bank banco = em.find(Bank.class, id);
-		if (banco == null) {
-			Bank b = new Bank();
-			b.setId(id);
-			b.setNombre(nombre);
-			em.persist(b);
+		String endPointURL = "http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS";
+		BindingProvider bp = (BindingProvider) service;
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
+		
+		RespuestaServicio resp = service.transferirMonto(cuenta.getNombreBanco().getId(), cuenta.getNumeroCuenta(), monto);
+		System.out.println("mensajeeeeeeee = " + resp.getMensaje());
+		System.out.println("numero cuentaaaaaaa = " + cuenta.getNumeroCuenta());
+		if(resp.getCodigo().equals("0000")){
+			return true;
 		}
+		
+		return false;
 	}
 
 	public boolean transferirWS(String idbanco, String numerocuenta, double monto) {
