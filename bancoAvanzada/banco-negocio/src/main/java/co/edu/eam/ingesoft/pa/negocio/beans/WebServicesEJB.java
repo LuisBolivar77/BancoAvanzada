@@ -130,8 +130,6 @@ public class WebServicesEJB {
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
 		
 		RespuestaServicio resp = service.transferirMonto(cuenta.getNombreBanco().getId(), cuenta.getNumeroCuenta(), monto);
-		System.out.println("mensajeeeeeeee = " + resp.getMensaje());
-		System.out.println("numero cuentaaaaaaa = " + cuenta.getNumeroCuenta());
 		if(resp.getCodigo().equals("0000")){
 			return true;
 		}

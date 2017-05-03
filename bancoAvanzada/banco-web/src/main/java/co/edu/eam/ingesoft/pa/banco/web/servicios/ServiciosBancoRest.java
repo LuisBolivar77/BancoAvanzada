@@ -19,6 +19,8 @@ import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
+import co.edu.eam.ingesoft.pa.negocio.DTO.RecibirDTO;
+import co.edu.eam.ingesoft.pa.negocio.DTO.VerificarDTO;
 import co.edu.eam.ingesoft.pa.negocio.beans.CodigoValidacionEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadaEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
@@ -52,11 +54,10 @@ public class ServiciosBancoRest {
 
 	@Path("/verificar")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@POST
-	public String verificar(@FormParam("cuenta") String cuenta, @FormParam("id") String cedula,
-			@FormParam("tipoId") String tipoId) {
-		boolean res = cuentaAsociadaEJB.verificarCuenta(cuenta, cedula, tipoId);
+	public String verificar(VerificarDTO verificarDTO) {
+		boolean res = cuentaAsociadaEJB.verificarCuenta(verificarDTO.getNumCuenta(), verificarDTO.getCedula(), verificarDTO.getTipoCed());
 		if (res == true) {
 			return "OK";
 		}
@@ -64,15 +65,15 @@ public class ServiciosBancoRest {
 
 	}
 
-	@Path("/transferir")
+	@Path("/recibir")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@POST
-	public String transferir(@FormParam("cuenta") String numeroCuenta, @FormParam("cantidad") double cantidad) {
+	public String transferir(RecibirDTO recibirDTO) {
 
-		Product pro = productoEJB.buscarProducto(numeroCuenta);
+		Product pro = productoEJB.buscarProducto(recibirDTO.getNumCuenta());
 		if (pro != null) {
-			productoEJB.sumarMontoCuenta(numeroCuenta, cantidad);
+			productoEJB.sumarMontoCuenta(recibirDTO.getNumCuenta(), recibirDTO.getMonto());
 			return "OK";
 		}
 		return "ERROR";
