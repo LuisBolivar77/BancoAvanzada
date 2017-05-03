@@ -20,6 +20,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
 import co.edu.eam.ingesoft.pa.negocio.DTO.RecibirDTO;
+import co.edu.eam.ingesoft.pa.negocio.DTO.TransferirDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.VerificarDTO;
 import co.edu.eam.ingesoft.pa.negocio.beans.CodigoValidacionEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadaEJB;
@@ -74,6 +75,20 @@ public class ServiciosBancoRest {
 		Product pro = productoEJB.buscarProducto(recibirDTO.getNumCuenta());
 		if (pro != null) {
 			productoEJB.sumarMontoCuenta(recibirDTO.getNumCuenta(), recibirDTO.getMonto());
+			return "OK";
+		}
+		return "ERROR";
+	}
+	
+	@Path("/tranferir")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@POST
+	public String transferir(TransferirDTO transferirDTO) {
+		
+		CuentaAsociada cuenta = cuentaAsociadaEJB.buscarCuentaAso(transferirDTO.getIdCuentaAso());
+		boolean resp = webServicesEJB.transferirDinero(cuenta, transferirDTO.getMonto());
+		if(resp == true ){
 			return "OK";
 		}
 		return "ERROR";
