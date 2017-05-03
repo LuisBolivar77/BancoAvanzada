@@ -30,5 +30,14 @@ public class BankEJB {
 	public void agregarBanco(Bank b) {
 		em.persist(b);
 	}
+	
+	/**
+	 * Busca un banco
+	 * @param cod el código del banco
+	 * @return el banco si lo encuentra, de lo contrario null
+	 */
+	public Bank buscar(String cod){
+		return em.find(Bank.class, cod);
+	}
 
 }

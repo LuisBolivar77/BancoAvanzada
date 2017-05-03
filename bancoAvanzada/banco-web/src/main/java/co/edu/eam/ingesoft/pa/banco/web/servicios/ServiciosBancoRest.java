@@ -19,9 +19,11 @@ import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
+import co.edu.eam.ingesoft.pa.negocio.DTO.AsociarCuentaDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.RecibirDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.TransferirDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.VerificarDTO;
+import co.edu.eam.ingesoft.pa.negocio.beans.BankEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CodigoValidacionEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CuentaAsociadaEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
@@ -53,12 +55,16 @@ public class ServiciosBancoRest {
 	@EJB
 	private CodigoValidacionEJB codigoEJB;
 
+	@EJB
+	private BankEJB bancoEJB;
+
 	@Path("/verificar")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@POST
 	public String verificar(VerificarDTO verificarDTO) {
-		boolean res = cuentaAsociadaEJB.verificarCuenta(verificarDTO.getNumCuenta(), verificarDTO.getCedula(), verificarDTO.getTipoCed());
+		boolean res = cuentaAsociadaEJB.verificarCuenta(verificarDTO.getNumCuenta(), verificarDTO.getCedula(),
+				verificarDTO.getTipoCed());
 		if (res == true) {
 			return "OK";
 		}
@@ -168,9 +174,27 @@ public class ServiciosBancoRest {
 	public List<Bank> listarBancos() {
 		return webServicesEJB.listarBancos();
 	}
-	
-	
-	
-	
+
+	@Path("/asociar")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@POST
+	public String asociarCuenta(AsociarCuentaDTO cuentaAsociar) {
+		CuentaAsociada cuenta = new CuentaAsociada();
+		Bank banco = bancoEJB.buscar(cuentaAsociar.getIdBanco());
+		Customer cliente = customerEJB.buscarCliente(cuentaAsociar.getIdCliente(), cuentaAsociar.getTipoId());
+		if (cliente != null) {
+			cuenta.setNombreBanco(banco);
+			cuenta.setCustomer(cliente);
+			cuenta.setNombreCuenta(cuentaAsociar.getNombreCuenta());
+			cuenta.setNombreTitular(cuentaAsociar.getNombreTitular());
+			cuenta.setNumDocumento(cuentaAsociar.getNumDocumento());
+			cuenta.setTipoDocumento(cuentaAsociar.getTipoDocumento());
+			cuentaAsociadaEJB.crearCuentaAsociada(cuenta);
+			return "OK";
+		} else {
+			return "ERROR";
+		}
+	}
 
 }
