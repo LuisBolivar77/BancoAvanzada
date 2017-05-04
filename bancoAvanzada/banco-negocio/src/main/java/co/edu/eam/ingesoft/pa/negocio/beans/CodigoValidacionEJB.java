@@ -72,7 +72,7 @@ public class CodigoValidacionEJB {
 	 * 
 	 * @param codigo
 	 */
-	public void enviarSms(String codigo, String numTelefono){
+	public void enviarSmsCodigoVal(String codigo, String numTelefono){
 		
 		NotificacionesService cliente = new NotificacionesService();
 		Notificaciones service = cliente.getNotificacionesPort();
@@ -83,6 +83,29 @@ public class CodigoValidacionEJB {
 		
 		Sms mensaje = new Sms();
 		mensaje.setTexto(codigo);
+		mensaje.setTo(numTelefono);
+		
+		RespuestaNotificacion res = service.enviarSMS(mensaje);
+		System.out.println(res.getMensaje());
+		
+		
+	}
+	
+	/**
+	 * 
+	 * @param codigo
+	 */
+	public void enviarSmsRecibido(double monto, String numTelefono){
+		
+		NotificacionesService cliente = new NotificacionesService();
+		Notificaciones service = cliente.getNotificacionesPort();
+		
+		String endPointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
+		BindingProvider bp = (BindingProvider) service;
+		bp.getResponseContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
+		
+		Sms mensaje = new Sms();
+		mensaje.setTexto("Se le ha sumado a su cuenta el monto de: "+ monto);
 		mensaje.setTo(numTelefono);
 		
 		RespuestaNotificacion res = service.enviarSMS(mensaje);

@@ -39,6 +39,9 @@ public class ProductoEJB {
 	
 	@EJB
 	private TransaccionEJB transacionEJB;
+	
+	@EJB
+	private CodigoValidacionEJB codigoEJB;
 
 	/**
 	 * M�todo para buscar un producto
@@ -734,10 +737,13 @@ public class ProductoEJB {
 		
 	}
 	
-	public void sumarMontoCuenta (String cuenta, double cantidad){
+	public void sumarMontoCuenta (String cuenta, double cantidad, Customer cliente){
 		SavingAccount sa = (SavingAccount) buscarProducto(cuenta);
 		if (sa != null){
 			sa.setAmmount(sa.getAmmount()+cantidad);
+//			String codigo = codigoEJB.numeroCodigoValidacion();
+//			codigoEJB.enviarSmsRecibido(cantidad, cliente.getTelefono());
+			
 		}
 	}
 	

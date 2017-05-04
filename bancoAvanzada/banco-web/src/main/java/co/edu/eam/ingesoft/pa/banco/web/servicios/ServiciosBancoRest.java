@@ -80,18 +80,18 @@ public class ServiciosBancoRest {
 
 		Product pro = productoEJB.buscarProducto(recibirDTO.getNumCuenta());
 		if (pro != null) {
-			productoEJB.sumarMontoCuenta(recibirDTO.getNumCuenta(), recibirDTO.getMonto());
+			productoEJB.sumarMontoCuenta(recibirDTO.getNumCuenta(), recibirDTO.getMonto(), pro.getCustomer());
 			return "OK";
 		}
 		return "ERROR";
 	}
 	
-	@Path("/tranferir")
+	@Path("/transferir")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@POST
 	public String transferir(TransferirDTO transferirDTO) {
-		
+
 		CuentaAsociada cuenta = cuentaAsociadaEJB.buscarCuentaAso(transferirDTO.getIdCuentaAso());
 		boolean resp = webServicesEJB.transferirDinero(cuenta, transferirDTO.getMonto());
 		if(resp == true ){
@@ -161,7 +161,7 @@ public class ServiciosBancoRest {
 		String codigo = codigoEJB.numeroCodigoValidacion();
 
 		if (cus != null) {
-			codigoEJB.enviarSms(codigo, cus.getTelefono());
+			codigoEJB.enviarSmsCodigoVal(codigo, cus.getTelefono());
 			return true;
 		}
 		return false;
