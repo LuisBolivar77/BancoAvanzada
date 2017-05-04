@@ -27,7 +27,7 @@ public class AsociarCuentaDTO implements Serializable {
 	
 	public AsociarCuentaDTO() {
 		// TODO Auto-generated constructor stub
-		estado = "PENDIENTE";
+		
 	}
 
 	/**

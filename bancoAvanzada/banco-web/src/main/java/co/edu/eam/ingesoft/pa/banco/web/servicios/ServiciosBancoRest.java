@@ -19,6 +19,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Customer;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Product;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
+import co.edu.eam.ingesoft.pa.banco.web.DTO.RespuestaDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.AsociarCuentaDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.RecibirDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.TransferirDTO;
@@ -90,14 +91,14 @@ public class ServiciosBancoRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@POST
-	public String transferir(TransferirDTO transferirDTO) {
+	public RespuestaDTO transferir(TransferirDTO transferirDTO) {
 		
 		CuentaAsociada cuenta = cuentaAsociadaEJB.buscarCuentaAso(transferirDTO.getIdCuentaAso());
 		boolean resp = webServicesEJB.transferirDinero(cuenta, transferirDTO.getMonto());
 		if(resp == true ){
-			return "OK";
+			return new RespuestaDTO(true);
 		}
-		return "ERROR";
+		return new RespuestaDTO(false, "la operación falló", "-1");
 	}
 
 	@Path("/listarCuentasAsociadasVeriCliente")
@@ -179,7 +180,7 @@ public class ServiciosBancoRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@POST
-	public String asociarCuenta(AsociarCuentaDTO cuentaAsociar) {
+	public RespuestaDTO asociarCuenta(AsociarCuentaDTO cuentaAsociar) {
 		CuentaAsociada cuenta = new CuentaAsociada();
 		Bank banco = bancoEJB.buscar(cuentaAsociar.getIdBanco());
 		Customer cliente = customerEJB.buscarCliente(cuentaAsociar.getIdCliente(), cuentaAsociar.getTipoId());
@@ -190,10 +191,12 @@ public class ServiciosBancoRest {
 			cuenta.setNombreTitular(cuentaAsociar.getNombreTitular());
 			cuenta.setNumDocumento(cuentaAsociar.getNumDocumento());
 			cuenta.setTipoDocumento(cuentaAsociar.getTipoDocumento());
+			cuenta.setEstado("PENDIENTE");
+			cuenta.setNumeroCuenta(cuentaAsociar.getNumeroCuenta());
 			cuentaAsociadaEJB.crearCuentaAsociada(cuenta);
-			return "OK";
+			return new RespuestaDTO(cuenta);
 		} else {
-			return "ERROR";
+			return new RespuestaDTO(false, "El cliente no existe", "-1");
 		}
 	}
 
