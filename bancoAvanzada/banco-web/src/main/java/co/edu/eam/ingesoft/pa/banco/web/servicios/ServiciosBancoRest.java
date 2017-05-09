@@ -22,6 +22,7 @@ import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
 import co.edu.eam.ingesoft.pa.banco.web.DTO.RespuestaDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.AsociarCuentaDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.RecibirDTO;
+import co.edu.eam.ingesoft.pa.negocio.DTO.RegistroDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.TransferirDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.VerificarDTO;
 import co.edu.eam.ingesoft.pa.negocio.beans.BankEJB;
@@ -198,6 +199,36 @@ public class ServiciosBancoRest {
 		} else {
 			return new RespuestaDTO(false, "El cliente no existe", "-1");
 		}
+	}
+	
+	@Path("/registrar")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@POST
+	public RespuestaDTO registrarCliente(RegistroDTO registro){
+		
+		Customer cus = customerEJB.buscarCliente(registro.getNumId(), registro.getTipoId());
+		if(cus == null){
+			Customer cust = new Customer();
+			cust.setName(registro.getNombre());
+			cust.setLastName(registro.getApellido());
+			cust.setIdNum(registro.getNumId());
+			cust.setEmail(registro.getEmail());
+			cust.setTelefono(registro.getTelefono());
+			
+			Usuario usu = new Usuario();
+			usu.setCustomer(cust);
+			usu.setUserName(registro.getUser());
+			usu.setPassword(registro.getPass());
+			
+			customerEJB.crearCliente(cust);
+			customerEJB.crearUsuario(usu);
+			
+			return new RespuestaDTO(cust);
+		}else{
+			return new RespuestaDTO(false, "El cliente que intenta registrar ya existe", "-2");
+		}
+		
 	}
 
 }

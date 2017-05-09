@@ -79,7 +79,7 @@ public class CodigoValidacionEJB {
 		
 		String endPointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
 		BindingProvider bp = (BindingProvider) service;
-		bp.getResponseContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
 		
 		Sms mensaje = new Sms();
 		mensaje.setTexto(codigo);
@@ -102,7 +102,7 @@ public class CodigoValidacionEJB {
 		
 		String endPointURL = "http://104.197.238.134:8080/notificaciones/notificacionesService";
 		BindingProvider bp = (BindingProvider) service;
-		bp.getResponseContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
+		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
 		
 		Sms mensaje = new Sms();
 		mensaje.setTexto("Se le ha sumado a su cuenta el monto de: "+ monto);

@@ -11,11 +11,13 @@ public class RespuestaDTO {
 	public RespuestaDTO() {
 		
 	}
+	
+	
 
 	public RespuestaDTO(Object obj) {
 		super();
 		this.obj = obj;
-		mensaje="Se ejecutó correctamente";
+		mensaje="Se ejecuto correctamente";
 		codigo="00";
 	}
 

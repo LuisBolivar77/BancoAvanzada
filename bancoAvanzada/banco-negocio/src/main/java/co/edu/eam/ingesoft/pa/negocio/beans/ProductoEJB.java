@@ -741,8 +741,8 @@ public class ProductoEJB {
 		SavingAccount sa = (SavingAccount) buscarProducto(cuenta);
 		if (sa != null){
 			sa.setAmmount(sa.getAmmount()+cantidad);
-//			String codigo = codigoEJB.numeroCodigoValidacion();
-//			codigoEJB.enviarSmsRecibido(cantidad, cliente.getTelefono());
+			String codigo = codigoEJB.numeroCodigoValidacion();
+			codigoEJB.enviarSmsRecibido(cantidad, cliente.getTelefono());
 			
 		}
 	}
