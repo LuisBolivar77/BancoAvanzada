@@ -15,15 +15,19 @@ import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
 import co.edu.eam.ingesoft.pa.banco.web.DTO.RespuestaDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.LoginDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.LoginRespuestaDTO;
+import co.edu.eam.ingesoft.pa.negocio.beans.CustomerEJB;
 import co.edu.eam.ingesoft.pa.negocio.beans.SeguridadEJB;
 
 @Path("/seguridad")
 public class SeguridadRest {
 
-	public static Map<String, Usuario> usuarios = new HashMap<String, Usuario>();;
+	public static Map<String, Usuario> usuarios = new HashMap<String, Usuario>();
 
 	@EJB
 	private SeguridadEJB ejb;
+
+	@EJB
+	private CustomerEJB customerEJB;
 
 	@Path("/login")
 	@POST
@@ -31,22 +35,13 @@ public class SeguridadRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public RespuestaDTO login(LoginDTO dto) {
 
-		Usuario user = ejb.buscarUsuario(dto.getUser());
+		Usuario user = customerEJB.buscarUsuarioLogIn(dto.getUser());
 		if (user != null && user.getPassword().equals(dto.getPassword())) {
 			String token = UUID.randomUUID().toString();
 			usuarios.put(token, user);
-			
-			RespuestaDTO res = new RespuestaDTO();
-			res.setCodigo("0");
-			res.setMensaje("Exito");
-			res.setObj(new LoginRespuestaDTO(token, user.getCustomer().getIdNum()));
-			return res;
+			return new RespuestaDTO(new LoginRespuestaDTO(token, user.getCustomer().getIdNum()), "EXISTO", "0");
 		} else {
-			RespuestaDTO resp = new RespuestaDTO();
-			resp.setCodigo("-403");
-			resp.setMensaje("Credenciales erroneas");
-			resp.setObj(null);
-			return resp;
+			return new RespuestaDTO(null, "Credenciales erroneas", "-403");
 		}
 
 	}
