@@ -79,7 +79,6 @@ public class ServiciosBancoRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@POST
 	public String transferir(RecibirDTO recibirDTO) {
-
 		Product pro = productoEJB.buscarProducto(recibirDTO.getNumCuenta());
 		if (pro != null) {
 			productoEJB.sumarMontoCuenta(recibirDTO.getNumCuenta(), recibirDTO.getMonto(), pro.getCustomer());
