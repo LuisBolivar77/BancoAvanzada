@@ -139,6 +139,8 @@ public class WebServicesEJB {
 		return false;
 	}
 
+	/**
+	 */
 	public boolean transferirWS(String idbanco, String numerocuenta, double monto) {
 
 		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
