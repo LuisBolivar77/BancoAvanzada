@@ -30,7 +30,7 @@ public class InterbancarioWS_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://104.155.128.249:8080/interbancario/InterbancarioWS/InterbancarioWS?wsdl");
+            url = new URL("http://104.198.67.149:8080/interbancario/InterbancarioWS/InterbancarioWS?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

@@ -172,8 +172,11 @@ public class ServiciosBancoRest {
 	@Path("/listarBancos")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Bank> listarBancos() {
-		return webServicesEJB.listarBancos();
+	public RespuestaDTO listarBancos() {
+		List<Bank> bancos = webServicesEJB.listarBancos();
+		return new RespuestaDTO(bancos, "lista de bancos", "0");
+		
+		
 	}
 
 	@Path("/asociar")
