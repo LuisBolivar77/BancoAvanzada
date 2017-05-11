@@ -104,11 +104,18 @@ public class WebServicesEJB {
 		List<Banco> lista = service.listarBancos();
 		List<Bank> bancos = new ArrayList<Bank>();
 		for (Banco banco : lista) {
+			
 			Bank b = new Bank();
 			b.setId(banco.getCodigo());
 			b.setNombre(banco.getNombre());
 			bancos.add(b);
-			bancoEJB.agregarBanco(b);
+			
+			Bank bb = bancoEJB.buscar(banco.getCodigo());
+			
+			 if (bb == null){
+					bancoEJB.agregarBanco(b);
+			 }			
+			
 		}
 
 		return bancos;
@@ -134,6 +141,8 @@ public class WebServicesEJB {
 		return false;
 	}
 
+	/**
+	 */
 	public boolean transferirWS(String idbanco, String numerocuenta, double monto) {
 
 		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
