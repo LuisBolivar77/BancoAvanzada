@@ -86,7 +86,6 @@ public class WebServicesEJB {
 
 	}
 
-
 	/**
 	 * Obtiene la lista de bancos registrados
 	 * 
@@ -102,40 +101,43 @@ public class WebServicesEJB {
 		BindingProvider bp = (BindingProvider) service;
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
 
-		
-
 		List<Banco> lista = service.listarBancos();
 		List<Bank> bancos = new ArrayList<Bank>();
-
 		for (Banco banco : lista) {
-			Bank b = new Bank();
-			b.setId(banco.getCodigo());
-			b.setNombre(banco.getNombre());
-			bancos.add(b);
-			bancoEJB.agregarBanco(b);
+			if (lista.isEmpty()) {
+				Bank b = new Bank();
+				b.setId(banco.getCodigo());
+				b.setNombre(banco.getNombre());
+				bancos.add(b);
+				bancoEJB.agregarBanco(b);
+			} else {
+				Bank b = new Bank();
+				b.setId(banco.getCodigo());
+				b.setNombre(banco.getNombre());
+				bancos.add(b);
+			}
 		}
-		
 
 		return bancos;
 
 	}
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public boolean transferirDinero(CuentaAsociada cuenta, double monto){
-		
+	public boolean transferirDinero(CuentaAsociada cuenta, double monto) {
+
 		InterbancarioWS_Service cliente = new InterbancarioWS_Service();
 		InterbancarioWS service = cliente.getInterbancarioWSPort();
-	
 
 		String endPointURL = "http://104.198.67.149:8080/interbancario/InterbancarioWS/InterbancarioWS";
 		BindingProvider bp = (BindingProvider) service;
 		bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endPointURL);
-		
-		RespuestaServicio resp = service.transferirMonto(cuenta.getNombreBanco().getId(), cuenta.getNumeroCuenta(), monto);
-		if(resp.getCodigo().equals("0000")){
+
+		RespuestaServicio resp = service.transferirMonto(cuenta.getNombreBanco().getId(), cuenta.getNumeroCuenta(),
+				monto);
+		if (resp.getCodigo().equals("0000")) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
