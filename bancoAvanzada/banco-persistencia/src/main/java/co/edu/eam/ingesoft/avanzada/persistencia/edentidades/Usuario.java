@@ -17,7 +17,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "T_USUARIO")
 @NamedQueries({
-		@NamedQuery(name = Usuario.LISTA_CUSTOMERS_NOMUS, query = "SELECT u FROM Usuario u WHERE u.userName = ?1"), })
+		@NamedQuery(name = Usuario.LISTA_CUSTOMERS_NOMUS, query = "SELECT u FROM Usuario u WHERE u.userName = ?1"),
+})
 public class Usuario implements Serializable {
 
 	public static final String LISTA_CUSTOMERS_NOMUS = "usuario.buscarUser";

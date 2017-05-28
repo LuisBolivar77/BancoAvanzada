@@ -21,6 +21,8 @@ import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.SavingAccount;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Usuario;
 import co.edu.eam.ingesoft.pa.banco.web.DTO.RespuestaDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.AsociarCuentaDTO;
+import co.edu.eam.ingesoft.pa.negocio.DTO.CuentaAsoDTO;
+import co.edu.eam.ingesoft.pa.negocio.DTO.CuentasDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.RecibirDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.RegistroDTO;
 import co.edu.eam.ingesoft.pa.negocio.DTO.TransferirDTO;
@@ -86,7 +88,7 @@ public class ServiciosBancoRest {
 		}
 		return "ERROR";
 	}
-	
+
 	@Path("/transferir")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -95,59 +97,87 @@ public class ServiciosBancoRest {
 
 		CuentaAsociada cuenta = cuentaAsociadaEJB.buscarCuentaAso(transferirDTO.getIdCuentaAso());
 		boolean resp = webServicesEJB.transferirDinero(cuenta, transferirDTO.getMonto());
-		if(resp == true ){
-			return new RespuestaDTO(true);
+		if (resp == true) {
+			productoEJB.restarMontoCuenta(transferirDTO.getNumCuenta(), transferirDTO.getMonto());
+			return new RespuestaDTO(true, "EXITO", "00");
 		}
-		return new RespuestaDTO(false, "la operaci�n fall�", "-1");
+		return new RespuestaDTO(false, "la operación falló", "-1");
 	}
 
 	@Path("/listarCuentasAsociadasVeriCliente")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@GET
-	public List<CuentaAsociada> listarCuentasAsociadasVeri(@QueryParam("id") String id,
-			@QueryParam("tipoId") String tipoId) {
+	public RespuestaDTO listarCuentasAsociadasVeri(@QueryParam("id") String id, @QueryParam("tipoId") String tipoId) {
 
 		List<CuentaAsociada> cuentas = new ArrayList<CuentaAsociada>();
+		List<CuentaAsoDTO> cuentaDTO = new ArrayList<CuentaAsoDTO>();
 		String tipoDoc = cuentaAsociadaEJB.casteoDocumentoSer(tipoId);
 		Customer cus = customerEJB.buscarCliente(id, tipoDoc);
 		if (cus != null) {
 			cuentas = cuentaAsociadaEJB.listacuentasAsociadasVerificadas(cus);
+			for (CuentaAsociada cuentaAsociada : cuentas) {
+				CuentaAsoDTO cuent = new CuentaAsoDTO();
+				cuent.setIdCuentaAso(cuentaAsociada.getId());
+				cuent.setNombreCuenta(cuentaAsociada.getNombreCuenta());
+				cuent.setNumCuenta(cuentaAsociada.getNumeroCuenta());
+
+				cuentaDTO.add(cuent);
+			}
 		}
 
-		return cuentas;
+		return new RespuestaDTO(cuentaDTO, "la lista de Cuentas", "000");
 	}
 
 	@Path("/listarCuentasAsociadasCliente")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@GET
-	public List<CuentaAsociada> listarCuentasAsociadas(@QueryParam("id") String id,
-			@QueryParam("tipoId") String tipoId) {
+	public RespuestaDTO listarCuentasAsociadas(@QueryParam("id") String id, @QueryParam("tipoId") String tipoId) {
 
 		List<CuentaAsociada> cuentas = new ArrayList<CuentaAsociada>();
+		List<CuentaAsoDTO> cuentaDTO = new ArrayList<CuentaAsoDTO>();
+
 		String tipoDoc = cuentaAsociadaEJB.casteoDocumentoSer(tipoId);
 		Customer cus = customerEJB.buscarCliente(id, tipoDoc);
 		if (cus != null) {
 			cuentas = cuentaAsociadaEJB.listacuentasAsociadas(cus);
+			for (CuentaAsociada cuentaAsociada : cuentas) {
+				CuentaAsoDTO cuent = new CuentaAsoDTO();
+				cuent.setIdCuentaAso(cuentaAsociada.getId());
+				cuent.setNombreCuenta(cuentaAsociada.getNombreCuenta());
+				cuent.setNumCuenta(cuentaAsociada.getNumeroCuenta());
+
+				cuentaDTO.add(cuent);
+			}
 		}
 
-		return cuentas;
+		return new RespuestaDTO(cuentaDTO, "Listado Cuentas", "00");
 	}
 
 	@Path("/listarCuentasCliente")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@GET
-	public List<SavingAccount> listarCuentasCliente(@QueryParam("id") String cedula,
-			@QueryParam("tipoId") String tipoId) {
+	public RespuestaDTO listarCuentasCliente(@QueryParam("id") String cedula, @QueryParam("tipoId") String tipoId) {
 
 		List<SavingAccount> cuentas = new ArrayList<SavingAccount>();
+		List<CuentasDTO> cuentasRes = new ArrayList<CuentasDTO>();
 		String tipoDoc = cuentaAsociadaEJB.casteoDocumentoSer(tipoId);
 
 		Customer cus = customerEJB.buscarCliente(cedula, tipoDoc);
 		cuentas = productoEJB.listaCuentasCliente(cus);
-		return cuentas;
+		for (SavingAccount savingAccount : cuentas) {
+
+			CuentasDTO cuenta = new CuentasDTO();
+			cuenta.setNumCuenta(savingAccount.getNumber());
+			cuenta.setNumId(savingAccount.getCustomer().getIdNum());
+			cuenta.setTipoId(savingAccount.getCustomer().getIdType());
+
+			cuentasRes.add(cuenta);
+		}
+
+		return new RespuestaDTO(cuentasRes, "listado Cuentas", "0");
 
 	}
 
@@ -155,7 +185,7 @@ public class ServiciosBancoRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@GET
-	public boolean generarEnviarCodigoVali(@QueryParam("id") String cedula, @QueryParam("tipoId") String tipoId) {
+	public RespuestaDTO generarEnviarCodigoVali(@QueryParam("id") String cedula, @QueryParam("tipoId") String tipoId) {
 
 		String tipoDoc = cuentaAsociadaEJB.casteoDocumentoSer(tipoId);
 		Customer cus = customerEJB.buscarCliente(cedula, tipoDoc);
@@ -163,9 +193,9 @@ public class ServiciosBancoRest {
 
 		if (cus != null) {
 			codigoEJB.enviarSmsCodigoVal(codigo, cus.getTelefono());
-			return true;
+			return new RespuestaDTO(codigo, "codigo generado", "0000");
 		}
-		return false;
+		return new RespuestaDTO(null, "Fallo", "-000");
 
 	}
 
@@ -175,11 +205,10 @@ public class ServiciosBancoRest {
 	public RespuestaDTO listarBancos() {
 		List<Bank> bancos = webServicesEJB.listarBancos();
 		return new RespuestaDTO(bancos, "lista de bancos", "0");
-		
-		
+
 	}
 
-	@Path("/asociar")
+	@Path("/ ")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@POST
@@ -194,7 +223,7 @@ public class ServiciosBancoRest {
 			cuenta.setNombreTitular(cuentaAsociar.getNombreTitular());
 			cuenta.setNumDocumento(cuentaAsociar.getNumDocumento());
 			cuenta.setTipoDocumento(cuentaAsociar.getTipoDocumento());
-			cuenta.setEstado("PENDIENTE");
+			cuenta.setEstado("Asociada");
 			cuenta.setNumeroCuenta(cuentaAsociar.getNumeroCuenta());
 			cuentaAsociadaEJB.crearCuentaAsociada(cuenta);
 			return new RespuestaDTO(cuenta);
@@ -202,35 +231,35 @@ public class ServiciosBancoRest {
 			return new RespuestaDTO(false, "El cliente no existe", "-1");
 		}
 	}
-	
+
 	@Path("/registrar")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@POST
-	public RespuestaDTO registrarCliente(RegistroDTO registro){
-		
+	public RespuestaDTO registrarCliente(RegistroDTO registro) {
+
 		Customer cus = customerEJB.buscarCliente(registro.getNumId(), registro.getTipoId());
-		if(cus == null){
+		if (cus == null) {
 			Customer cust = new Customer();
 			cust.setName(registro.getNombre());
 			cust.setLastName(registro.getApellido());
 			cust.setIdNum(registro.getNumId());
 			cust.setEmail(registro.getEmail());
 			cust.setTelefono(registro.getTelefono());
-			
+
 			Usuario usu = new Usuario();
 			usu.setCustomer(cust);
 			usu.setUserName(registro.getUser());
 			usu.setPassword(registro.getPass());
-			
+
 			customerEJB.crearCliente(cust);
 			customerEJB.crearUsuario(usu);
-			
+
 			return new RespuestaDTO(cust);
-		}else{
+		} else {
 			return new RespuestaDTO(false, "El cliente que intenta registrar ya existe", "-2");
 		}
-		
+
 	}
 
 }

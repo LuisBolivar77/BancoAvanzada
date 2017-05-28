@@ -743,7 +743,22 @@ public class ProductoEJB {
 			sa.setAmmount(sa.getAmmount()+cantidad);
 			String codigo = codigoEJB.numeroCodigoValidacion();
 			codigoEJB.enviarSmsRecibido(cantidad, cliente.getTelefono());
+			editarProducto(sa);
 			
+			
+		}
+	}
+	
+	public void restarMontoCuenta (String numCuenta, double monto){
+		Product pro = buscarProducto(numCuenta);
+		if(pro != null){
+			double total = pro.getAmmount()-monto;
+			if(total >= 0){
+				pro.setAmmount(total);
+				editarProducto(pro);
+				
+				
+			}
 		}
 	}
 	

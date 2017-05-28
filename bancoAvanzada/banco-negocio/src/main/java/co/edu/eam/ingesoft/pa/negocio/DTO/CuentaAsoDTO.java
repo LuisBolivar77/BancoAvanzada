@@ -1,16 +1,14 @@
 package co.edu.eam.ingesoft.pa.negocio.DTO;
 
-import java.io.Serializable;
-
-public class TransferirDTO implements Serializable{
+public class CuentaAsoDTO {
 	
 	private int idCuentaAso;
 	
-	private double monto;
+	private String nombreCuenta;
 	
 	private String numCuenta;
 	
-	public TransferirDTO() {
+	public CuentaAsoDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -29,17 +27,17 @@ public class TransferirDTO implements Serializable{
 	}
 
 	/**
-	 * @return the monto
+	 * @return the nombreCuenta
 	 */
-	public double getMonto() {
-		return monto;
+	public String getNombreCuenta() {
+		return nombreCuenta;
 	}
 
 	/**
-	 * @param monto the monto to set
+	 * @param nombreCuenta the nombreCuenta to set
 	 */
-	public void setMonto(double monto) {
-		this.monto = monto;
+	public void setNombreCuenta(String nombreCuenta) {
+		this.nombreCuenta = nombreCuenta;
 	}
 
 	/**
@@ -55,8 +53,6 @@ public class TransferirDTO implements Serializable{
 	public void setNumCuenta(String numCuenta) {
 		this.numCuenta = numCuenta;
 	}
-	
-	
 	
 	
 

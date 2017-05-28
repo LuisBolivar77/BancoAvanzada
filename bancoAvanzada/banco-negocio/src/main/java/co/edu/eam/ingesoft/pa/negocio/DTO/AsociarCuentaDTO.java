@@ -6,51 +6,27 @@ import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Bank;
 import co.edu.eam.ingesoft.avanzada.persistencia.edentidades.Customer;
 
 public class AsociarCuentaDTO implements Serializable {
-	
-	private int id;
 
 	private String nombreTitular;
-	
+
 	private String numDocumento;
-	
+
 	private String tipoDocumento;
-	
+
 	private String idBanco;
-	
+
 	private String numeroCuenta;
-	
+
 	private String nombreCuenta;
-	
+
 	private String idCliente;
-	
+
 	private String tipoId;
-	
-	private String estado;
-	
+
 	public AsociarCuentaDTO() {
 		// TODO Auto-generated constructor stub
-		
+
 	}
-	
-	
-
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
-
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
 
 	/**
 	 * @return the nombreTitular
@@ -60,7 +36,8 @@ public class AsociarCuentaDTO implements Serializable {
 	}
 
 	/**
-	 * @param nombreTitular the nombreTitular to set
+	 * @param nombreTitular
+	 *            the nombreTitular to set
 	 */
 	public void setNombreTitular(String nombreTitular) {
 		this.nombreTitular = nombreTitular;
@@ -74,7 +51,8 @@ public class AsociarCuentaDTO implements Serializable {
 	}
 
 	/**
-	 * @param numDocumento the numDocumento to set
+	 * @param numDocumento
+	 *            the numDocumento to set
 	 */
 	public void setNumDocumento(String numDocumento) {
 		this.numDocumento = numDocumento;
@@ -88,7 +66,8 @@ public class AsociarCuentaDTO implements Serializable {
 	}
 
 	/**
-	 * @param tipoDocumento the tipoDocumento to set
+	 * @param tipoDocumento
+	 *            the tipoDocumento to set
 	 */
 	public void setTipoDocumento(String tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
@@ -102,7 +81,8 @@ public class AsociarCuentaDTO implements Serializable {
 	}
 
 	/**
-	 * @param idBanco the idBanco to set
+	 * @param idBanco
+	 *            the idBanco to set
 	 */
 	public void setIdBanco(String idBanco) {
 		this.idBanco = idBanco;
@@ -116,7 +96,8 @@ public class AsociarCuentaDTO implements Serializable {
 	}
 
 	/**
-	 * @param numeroCuenta the numeroCuenta to set
+	 * @param numeroCuenta
+	 *            the numeroCuenta to set
 	 */
 	public void setNumeroCuenta(String numeroCuenta) {
 		this.numeroCuenta = numeroCuenta;
@@ -130,7 +111,8 @@ public class AsociarCuentaDTO implements Serializable {
 	}
 
 	/**
-	 * @param nombreCuenta the nombreCuenta to set
+	 * @param nombreCuenta
+	 *            the nombreCuenta to set
 	 */
 	public void setNombreCuenta(String nombreCuenta) {
 		this.nombreCuenta = nombreCuenta;
@@ -144,7 +126,8 @@ public class AsociarCuentaDTO implements Serializable {
 	}
 
 	/**
-	 * @param idCliente the idCliente to set
+	 * @param idCliente
+	 *            the idCliente to set
 	 */
 	public void setIdCliente(String idCliente) {
 		this.idCliente = idCliente;
@@ -158,24 +141,11 @@ public class AsociarCuentaDTO implements Serializable {
 	}
 
 	/**
-	 * @param tipoId the tipoId to set
+	 * @param tipoId
+	 *            the tipoId to set
 	 */
 	public void setTipoId(String tipoId) {
 		this.tipoId = tipoId;
 	}
 
-	/**
-	 * @return the estado
-	 */
-	public String getEstado() {
-		return estado;
-	}
-
-	/**
-	 * @param estado the estado to set
-	 */
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-	
 }
